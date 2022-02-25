@@ -1,8 +1,12 @@
 ﻿  pch.cpp
   ChildFrm.cpp
+  IppConvert.cpp
   IppCreate.cpp
   IppCreateDoc.cpp
   IppCreateView.cpp
+  IppDib.cpp
+D:\GIT2\visual-c-image-processing\IppCreate\IppCreate\IppDib.cpp(185,80): warning C4334: '<<': 32비트 시프트의 결과가 암시적으로 64비트로 변환됩니다. 64비트 시프트를 사용하시겠습니까?
+D:\GIT2\visual-c-image-processing\IppCreate\IppCreate\IppDib.cpp(351,80): warning C4334: '<<': 32비트 시프트의 결과가 암시적으로 64비트로 변환됩니다. 64비트 시프트를 사용하시겠습니까?
   MainFrm.cpp
   코드를 생성하고 있습니다...
-  IppCreate.vcxproj -> E:\GIT_BLOG\visual-c-image-processing\IppCreate\x64\Debug\IppCreate.exe
+  IppCreate.vcxproj -> D:\GIT2\visual-c-image-processing\IppCreate\x64\Debug\IppCreate.exe

@@ -185,19 +185,25 @@
   <ItemGroup>
     <ClInclude Include="ChildFrm.h" />
     <ClInclude Include="framework.h" />
+    <ClInclude Include="IppConvert.h" />
     <ClInclude Include="IppCreate.h" />
     <ClInclude Include="IppCreateDoc.h" />
     <ClInclude Include="IppCreateView.h" />
+    <ClInclude Include="IppDib.h" />
+    <ClInclude Include="IppImage.h" />
     <ClInclude Include="MainFrm.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Resource.h" />
+    <ClInclude Include="RGBBYTE.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ChildFrm.cpp" />
+    <ClCompile Include="IppConvert.cpp" />
     <ClCompile Include="IppCreate.cpp" />
     <ClCompile Include="IppCreateDoc.cpp" />
     <ClCompile Include="IppCreateView.cpp" />
+    <ClCompile Include="IppDib.cpp" />
     <ClCompile Include="MainFrm.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>

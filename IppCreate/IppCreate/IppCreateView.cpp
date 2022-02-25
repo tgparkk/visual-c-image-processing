@@ -13,6 +13,8 @@
 #include "IppCreateDoc.h"
 #include "IppCreateView.h"
 
+#include "IppDib.h"
+
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif
@@ -27,6 +29,7 @@ BEGIN_MESSAGE_MAP(CIppCreateView, CView)
 	ON_COMMAND(ID_FILE_PRINT, &CView::OnFilePrint)
 	ON_COMMAND(ID_FILE_PRINT_DIRECT, &CView::OnFilePrint)
 	ON_COMMAND(ID_FILE_PRINT_PREVIEW, &CView::OnFilePrintPreview)
+	ON_WM_LBUTTONDOWN()
 END_MESSAGE_MAP()
 
 // CIppCreateView 생성/소멸
@@ -103,3 +106,14 @@ CIppCreateDoc* CIppCreateView::GetDocument() const // 디버그되지 않은 버
 
 
 // CIppCreateView 메시지 처리기
+
+void CIppCreateView::OnLButtonDown(UINT nFlags, CPoint point)
+{
+	IppDib dib;
+	dib.Load("lenna.bmp");
+
+	CClientDC dc(this);
+	dib.Draw(dc.m_hDC, point.x, point.y);
+
+	CView::OnLButtonDown(nFlags, point);
+}
