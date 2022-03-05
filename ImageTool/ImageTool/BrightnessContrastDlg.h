@@ -26,4 +26,6 @@ public:
 	CSliderCtrl m_sliderBrightness;
 	int m_nContrast;
 	CSliderCtrl m_sliderContrast;
+	virtual BOOL OnInitDialog();
+	afx_msg void OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar);
 };
