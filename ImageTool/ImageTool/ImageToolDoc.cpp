@@ -13,6 +13,10 @@
 #include "ImageToolDoc.h"
 #include "FileNewDlg.h"
 
+#include "IppImage/IppImage.h"
+#include "IppImage/IppConvert.h"
+#include "IppEnhance.h"
+
 #include <propkey.h>
 
 #ifdef _DEBUG
@@ -21,11 +25,21 @@
 
 // CImageToolDoc
 
+#define CONVERT_DIB_TO_BYTEIMAGE(m_Dib, img) \
+	IppByteImage img; \
+	IppDibToImage(m_Dib, img);
+
+#define CONVERT_IMAGE_TO_DIB(img, dib) \
+	IppDib dib; \
+	IppImageToDib(img, dib);
+
 IMPLEMENT_DYNCREATE(CImageToolDoc, CDocument)
 
 BEGIN_MESSAGE_MAP(CImageToolDoc, CDocument)
 	ON_COMMAND(ID_WINDOW_DUPLICATE, &CImageToolDoc::OnWindowDuplicate)
 	ON_COMMAND(ID_EDIT_COPY, &CImageToolDoc::OnEditCopy)
+	ON_COMMAND(ID_IMAGE_INVERSE, &CImageToolDoc::OnImageInverse)
+	ON_UPDATE_COMMAND_UI(ID_IMAGE_INVERSE, &CImageToolDoc::OnUpdateImageInverse)
 END_MESSAGE_MAP()
 
 
@@ -201,4 +215,32 @@ void CImageToolDoc::OnEditCopy()
 	// TODO: Add your command handler code here
 	if (m_Dib.IsValid())
 		m_Dib.CopyToClipboard();
+}
+
+
+void CImageToolDoc::OnImageInverse()
+{
+	// TODO: Add your command handler code here
+	//IppByteImage img;
+	//IppDibToImage(m_Dib, img);
+	CONVERT_DIB_TO_BYTEIMAGE(m_Dib, img)
+
+	IppInverse(img);
+
+	//IppDib dib;
+	//IppImageToDib(img, dib);
+	CONVERT_IMAGE_TO_DIB(img, dib)
+
+	AfxPrintInfo(_T("[반전] 입력 영상: %s"), GetTitle());
+	
+	//AfxNewBitmap(dib); // 새로운 뷰에 그리기
+	UpdateAllViews(NULL); // 다시 그리기
+
+}
+
+
+void CImageToolDoc::OnUpdateImageInverse(CCmdUI* pCmdUI)
+{
+	// TODO: Add your command update UI handler code here
+	pCmdUI->Enable(m_Dib.GetBitCount() == 8);
 }

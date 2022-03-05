@@ -53,4 +53,6 @@ public:
 	virtual BOOL OnSaveDocument(LPCTSTR lpszPathName);
 	afx_msg void OnWindowDuplicate();
 	afx_msg void OnEditCopy();
+	afx_msg void OnImageInverse();
+	afx_msg void OnUpdateImageInverse(CCmdUI* pCmdUI);
 };
