@@ -27,6 +27,7 @@ void CBrightnessContrastDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CDialogEx::DoDataExchange(pDX);
 	DDX_Text(pDX, IDC_BRIGHTNESS_EDIT, m_nBrightness);
+	DDX_Text(pDX, IDC_CONTRAST_EDIT, m_nContrast);
 	DDV_MinMaxInt(pDX, m_nBrightness, -255, 255);
 	DDX_Control(pDX, IDC_BRIGHTNESS_SLIDER, m_sliderBrightness);
 	DDV_MinMaxInt(pDX, m_nContrast, -100, 100);
@@ -36,6 +37,8 @@ void CBrightnessContrastDlg::DoDataExchange(CDataExchange* pDX)
 
 BEGIN_MESSAGE_MAP(CBrightnessContrastDlg, CDialogEx)
 	ON_WM_HSCROLL()
+	ON_EN_CHANGE(IDC_BRIGHTNESS_EDIT, &CBrightnessContrastDlg::OnEnChangeBrightnessEdit)
+	ON_EN_CHANGE(IDC_CONTRAST_EDIT, &CBrightnessContrastDlg::OnEnChangeContrastEdit)
 END_MESSAGE_MAP()
 
 
@@ -75,4 +78,30 @@ void CBrightnessContrastDlg::OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScr
 	}
 
 	CDialogEx::OnHScroll(nSBCode, nPos, pScrollBar);
+}
+
+
+void CBrightnessContrastDlg::OnEnChangeBrightnessEdit()
+{
+	// TODO:  RICHEDIT 컨트롤인 경우, 이 컨트롤은
+	// CDialogEx::OnInitDialog() 함수를 재지정 
+	//하고 마스크에 OR 연산하여 설정된 ENM_CHANGE 플래그를 지정하여 CRichEditCtrl().SetEventMask()를 호출하지 않으면
+	// 이 알림 메시지를 보내지 않습니다.
+
+	// TODO:  여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	UpdateData(TRUE);
+	m_sliderBrightness.SetPos(m_nBrightness);
+}
+
+
+void CBrightnessContrastDlg::OnEnChangeContrastEdit()
+{
+	// TODO:  RICHEDIT 컨트롤인 경우, 이 컨트롤은
+	// CDialogEx::OnInitDialog() 함수를 재지정 
+	//하고 마스크에 OR 연산하여 설정된 ENM_CHANGE 플래그를 지정하여 CRichEditCtrl().SetEventMask()를 호출하지 않으면
+	// 이 알림 메시지를 보내지 않습니다.
+
+	// TODO:  여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	UpdateData(TRUE);
+	m_sliderContrast.SetPos(m_nContrast);
 }

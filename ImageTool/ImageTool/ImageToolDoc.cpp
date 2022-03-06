@@ -15,7 +15,8 @@
 
 #include "IppImage/IppImage.h"
 #include "IppImage/IppConvert.h"
-#include "IppEnhance.h"
+#include "IppImage/IppEnhance.h"
+#include "BrightnessContrastDlg.h"
 
 #include <propkey.h>
 
@@ -40,6 +41,7 @@ BEGIN_MESSAGE_MAP(CImageToolDoc, CDocument)
 	ON_COMMAND(ID_EDIT_COPY, &CImageToolDoc::OnEditCopy)
 	ON_COMMAND(ID_IMAGE_INVERSE, &CImageToolDoc::OnImageInverse)
 	ON_UPDATE_COMMAND_UI(ID_IMAGE_INVERSE, &CImageToolDoc::OnUpdateImageInverse)
+	ON_COMMAND(ID_BRIGHTNESS_CONTRAST, &CImageToolDoc::OnBrightnessContrast)
 END_MESSAGE_MAP()
 
 
@@ -243,4 +245,34 @@ void CImageToolDoc::OnUpdateImageInverse(CCmdUI* pCmdUI)
 {
 	// TODO: Add your command update UI handler code here
 	pCmdUI->Enable(m_Dib.GetBitCount() == 8);
+}
+
+
+/*
+#define CONVERT_DIB_TO_BYTEIMAGE(m_Dib, img) \
+	IppByteImage img; \
+	IppDibToImage(m_Dib, img);
+
+#define CONVERT_IMAGE_TO_DIB(img, dib) \
+	IppDib dib; \
+	IppImageToDib(img, dib);
+*/
+
+void CImageToolDoc::OnBrightnessContrast()
+{
+	// TODO: 여기에 명령 처리기 코드를 추가합니다.
+	CBrightnessContrastDlg dlg;
+	if (dlg.DoModal() == IDOK)
+	{
+		CONVERT_DIB_TO_BYTEIMAGE(m_Dib, img)
+		IppBrightness(img, dlg.m_nBrightness);
+		IppContrast(img, dlg.m_nContrast);
+		CONVERT_IMAGE_TO_DIB(img, dib);
+
+		AfxPrintInfo(_T("[밝기/명암비 조절] 입력 영상 : %s, 밝기 : %d, 명암비 : %d%%"),
+			GetTitle(), dlg.m_nBrightness, dlg.m_nContrast);
+		AfxNewBitmap(dib);
+
+	}
+
 }

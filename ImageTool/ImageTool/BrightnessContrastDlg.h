@@ -28,4 +28,6 @@ public:
 	CSliderCtrl m_sliderContrast;
 	virtual BOOL OnInitDialog();
 	afx_msg void OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar);
+	afx_msg void OnEnChangeBrightnessEdit();
+	afx_msg void OnEnChangeContrastEdit();
 };

@@ -55,4 +55,5 @@ public:
 	afx_msg void OnEditCopy();
 	afx_msg void OnImageInverse();
 	afx_msg void OnUpdateImageInverse(CCmdUI* pCmdUI);
+	afx_msg void OnBrightnessContrast();
 };

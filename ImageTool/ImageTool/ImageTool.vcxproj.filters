@@ -13,6 +13,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="IppImage">
+      <UniqueIdentifier>{c6c35b5b-5365-47eb-b8ab-aa85316784a9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ImageTool.h">
@@ -60,10 +63,13 @@
     <ClInclude Include="FileNewDlg.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="IppEnhance.h">
+    <ClInclude Include="BrightnessContrastDlg.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="BrightnessContrastDlg.h">
+    <ClInclude Include="IppImage\IppEnhance.h">
+      <Filter>IppImage</Filter>
+    </ClInclude>
+    <ClInclude Include="GammaCorrectionDlg.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
@@ -98,10 +104,13 @@
     <ClCompile Include="FileNewDlg.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="IppEnhance.cpp">
+    <ClCompile Include="BrightnessContrastDlg.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="BrightnessContrastDlg.cpp">
+    <ClCompile Include="IppImage\IppEnhance.cpp">
+      <Filter>IppImage</Filter>
+    </ClCompile>
+    <ClCompile Include="GammaCorrectionDlg.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
