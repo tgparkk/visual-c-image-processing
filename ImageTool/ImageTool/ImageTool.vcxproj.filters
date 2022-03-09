@@ -72,6 +72,9 @@
     <ClInclude Include="GammaCorrectionDlg.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="HistogramDlg.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ImageTool.cpp">
@@ -113,12 +116,16 @@
     <ClCompile Include="GammaCorrectionDlg.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="HistogramDlg.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="ImageTool.reg" />
     <None Include="res\ImageTool.rc2">
       <Filter>리소스 파일</Filter>
     </None>
+    <None Include="CHistogramDlg.htm" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="ImageTool.rc">

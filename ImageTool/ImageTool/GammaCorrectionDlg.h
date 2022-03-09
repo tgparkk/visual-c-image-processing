@@ -24,4 +24,8 @@ protected:
 public:
 	CSliderCtrl m_sliderGamma;
 	float m_fGamma;
+	virtual BOOL OnInitDialog();
+	afx_msg void OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar);
+	afx_msg void OnEnChangeGammaEdit();
+
 };
