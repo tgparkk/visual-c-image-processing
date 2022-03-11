@@ -60,4 +60,6 @@ public:
 	afx_msg void OnViewHistogram();
 	afx_msg void OnHistoStretching();
 	afx_msg void OnHistoEqualization();
+	afx_msg void OnArithmeticLogical();
+	afx_msg void OnBitplaneSlicing();
 };

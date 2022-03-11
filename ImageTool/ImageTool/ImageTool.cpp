@@ -30,13 +30,14 @@ BEGIN_MESSAGE_MAP(CImageToolApp, CWinAppEx)
 	// 표준 인쇄 설정 명령입니다.
 	ON_COMMAND(ID_FILE_PRINT_SETUP, &CWinAppEx::OnFilePrintSetup)
 	ON_COMMAND(ID_EDIT_PASTE, &CImageToolApp::OnEditPaste)
+	ON_COMMAND(ID_WINDOW_CLOSEALL, &CImageToolApp::OnWindowCloseall)
 END_MESSAGE_MAP()
 
 
 // CImageToolApp 생성
 
 CImageToolApp::CImageToolApp() noexcept
-	: m_pNewDib(NULL)
+	: m_pNewDib(NULL), m_pImageDocTemplate(NULL)
 {
 	m_bHiColorIcons = TRUE;
 
@@ -118,13 +119,14 @@ BOOL CImageToolApp::InitInstance()
 	// 애플리케이션의 문서 템플릿을 등록합니다.  문서 템플릿은
 	//  문서, 프레임 창 및 뷰 사이의 연결 역할을 합니다.
 	CMultiDocTemplate* pDocTemplate;
-	pDocTemplate = new CMultiDocTemplate(IDR_ImageToolTYPE,
+	//pDocTemplate = new CMultiDocTemplate(IDR_ImageToolTYPE,
+	m_pImageDocTemplate = new CMultiDocTemplate(IDR_ImageToolTYPE,
 		RUNTIME_CLASS(CImageToolDoc),
 		RUNTIME_CLASS(CChildFrame), // 사용자 지정 MDI 자식 프레임입니다.
 		RUNTIME_CLASS(CImageToolView));
-	if (!pDocTemplate)
+	if (!m_pImageDocTemplate)
 		return FALSE;
-	AddDocTemplate(pDocTemplate);
+	AddDocTemplate(m_pImageDocTemplate);
 
 	// 주 MDI 프레임 창을 만듭니다.
 	CMainFrame* pMainFrame = new CMainFrame;
@@ -276,4 +278,10 @@ void CAboutDlg::OnUpdateEditPaste(CCmdUI* pCmdUI)
 {
 	// TODO: Add your command update UI handler code here
 	pCmdUI->Enable(IsClipboardFormatAvailable(CF_DIB));
+}
+
+void CImageToolApp::OnWindowCloseall()
+{
+	// TODO: 여기에 명령 처리기 코드를 추가합니다.
+	CloseAllDocuments(TRUE);
 }
