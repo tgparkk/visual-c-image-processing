@@ -190,6 +190,7 @@
     <ClInclude Include="FileNewDlg.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="GammaCorrectionDlg.h" />
+    <ClInclude Include="GaussianDlg.h" />
     <ClInclude Include="HistogramDlg.h" />
     <ClInclude Include="ImageTool.h" />
     <ClInclude Include="ImageToolDoc.h" />
@@ -197,6 +198,7 @@
     <ClInclude Include="IppImage\IppConvert.h" />
     <ClInclude Include="IppImage\IppDib.h" />
     <ClInclude Include="IppImage\IppEnhance.h" />
+    <ClInclude Include="IppImage\IppFilter.h" />
     <ClInclude Include="IppImage\IppImage.h" />
     <ClInclude Include="IppImage\RGBBYTE.h" />
     <ClInclude Include="MainFrm.h" />
@@ -211,6 +213,7 @@
     <ClCompile Include="ChildFrm.cpp" />
     <ClCompile Include="FileNewDlg.cpp" />
     <ClCompile Include="GammaCorrectionDlg.cpp" />
+    <ClCompile Include="GaussianDlg.cpp" />
     <ClCompile Include="HistogramDlg.cpp" />
     <ClCompile Include="ImageTool.cpp" />
     <ClCompile Include="ImageToolDoc.cpp" />
@@ -218,6 +221,7 @@
     <ClCompile Include="IppImage\IppConvert.cpp" />
     <ClCompile Include="IppImage\IppDib.cpp" />
     <ClCompile Include="IppImage\IppEnhance.cpp" />
+    <ClCompile Include="IppImage\IppFilter.cpp" />
     <ClCompile Include="MainFrm.cpp" />
     <ClCompile Include="OutputWnd.cpp" />
     <ClCompile Include="pch.cpp">
