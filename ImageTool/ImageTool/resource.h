@@ -32,6 +32,8 @@
 #define IDD_HISTOGRAM                   317
 #define IDD_ARITHMETIC_LOGICAL          319
 #define IDD_GAUSSIAN                    321
+#define IDD_ADD_NOISE                   323
+#define IDD_DIFFUSION                   325
 #define IDC_IMAGE_TYPE                  1000
 #define IDC_WIDTH                       1001
 #define IDC_HEIGHT                      1002
@@ -50,8 +52,15 @@
 #define IDC_FUNCTION3                   1012
 #define IDC_SIGMA_EDIT                  1012
 #define IDC_FUNCTION4                   1013
+#define IDC_NOISE_RADIO1                1013
 #define IDC_FUNCTION5                   1014
+#define IDC_NOISE_RADIO2                1014
 #define IDC_FUNCTION6                   1015
+#define IDC_NOISE_AMOUNT                1015
+#define IDC_SPIN_AMOUNT                 1016
+#define IDC_DIFFUSION_LAMBDA            1017
+#define IDC_DIFFUSION_K                 1018
+#define IDC_DIFFUSION_ITER              1019
 #define ID_32771                        32771
 #define ID_WINDOW_DUPLICATE             32772
 #define ID_32773                        32773
@@ -93,14 +102,27 @@
 #define ID_FILTER_MEAN                  32812
 #define ID_FILTER_WEIGHTED_MEAN         32813
 #define ID_FILTER_GAUSSIAN              32814
+#define ID_32815                        32815
+#define ID_32816                        32816
+#define ID_32817                        32817
+#define ID_FILTER_LAP                   32818
+#define ID_FILTER_LAPLACIAN             32819
+#define ID_FILTER_UNSHARP_MASK          32820
+#define ID_FILTER_HIGHBOOST             32821
+#define ID_32822                        32822
+#define ID_ADD_NOISE                    32823
+#define ID_32824                        32824
+#define ID_FILTER_MEDIAN                32825
+#define ID_32826                        32826
+#define ID_FILTER_DIFFUSION             32827
 
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        323
-#define _APS_NEXT_COMMAND_VALUE         32815
-#define _APS_NEXT_CONTROL_VALUE         1013
+#define _APS_NEXT_RESOURCE_VALUE        327
+#define _APS_NEXT_COMMAND_VALUE         32828
+#define _APS_NEXT_CONTROL_VALUE         1018
 #define _APS_NEXT_SYMED_VALUE           311
 #endif
 #endif

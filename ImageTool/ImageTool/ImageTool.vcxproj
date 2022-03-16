@@ -184,9 +184,11 @@
     </ResourceCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="AddNoiseDlg.h" />
     <ClInclude Include="ArithmeticLogicaDlg.h" />
     <ClInclude Include="BrightnessContrastDlg.h" />
     <ClInclude Include="ChildFrm.h" />
+    <ClInclude Include="DiffusionDlg.h" />
     <ClInclude Include="FileNewDlg.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="GammaCorrectionDlg.h" />
@@ -208,9 +210,11 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="AddNoiseDlg.cpp" />
     <ClCompile Include="ArithmeticLogicaDlg.cpp" />
     <ClCompile Include="BrightnessContrastDlg.cpp" />
     <ClCompile Include="ChildFrm.cpp" />
+    <ClCompile Include="DiffusionDlg.cpp" />
     <ClCompile Include="FileNewDlg.cpp" />
     <ClCompile Include="GammaCorrectionDlg.cpp" />
     <ClCompile Include="GaussianDlg.cpp" />
