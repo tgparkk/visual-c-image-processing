@@ -29,6 +29,9 @@
 
 #include "DiffusionDlg.h"
 
+#include "IppImage/IppGeometry.h"
+#include "TranslateDlg.h"
+
 #include <propkey.h>
 
 #ifdef _DEBUG
@@ -68,6 +71,7 @@ BEGIN_MESSAGE_MAP(CImageToolDoc, CDocument)
 	ON_COMMAND(ID_ADD_NOISE, &CImageToolDoc::OnAddNoise)
 	ON_COMMAND(ID_FILTER_MEDIAN, &CImageToolDoc::OnFilterMedian)
 	ON_COMMAND(ID_FILTER_DIFFUSION, &CImageToolDoc::OnFilterDiffusion)
+	ON_COMMAND(ID_IMAGE_TRANSLATION, &CImageToolDoc::OnImageTranslation)
 END_MESSAGE_MAP()
 
 
@@ -544,6 +548,24 @@ void CImageToolDoc::OnFilterDiffusion()
 
 		AfxPrintInfo(_T("[비등방성 확산 필터] 입력 영상: %s, Lambda: %4.2f, K: %4.2f, 반복 횟수: %d"),
 				GetTitle(), dlg.m_fLambda, dlg.m_fK, dlg.m_nIteration);
+		AfxNewBitmap(dib);
+	}
+}
+
+
+void CImageToolDoc::OnImageTranslation()
+{
+	// TODO: 여기에 명령 처리기 코드를 추가합니다.
+	CTranslateDlg dlg;
+	if (dlg.DoModal() == IDOK)
+	{
+		CONVERT_DIB_TO_BYTEIMAGE(m_Dib, imgSrc)
+		IppByteImage imgDst;
+		IppTranslate(imgSrc, imgDst, dlg.m_nNewSX, dlg.m_nNewSY);
+		CONVERT_IMAGE_TO_DIB(imgDst, dib)
+
+		AfxPrintInfo(_T("[이동 변환] 입력 영상: %s, 가로 이동: %d, 세로 이동: %d"),
+				GetTitle(), dlg.m_nNewSX, dlg.m_nNewSY);
 		AfxNewBitmap(dib);
 	}
 }
