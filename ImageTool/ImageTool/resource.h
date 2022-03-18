@@ -35,7 +35,6 @@
 #define IDD_ADD_NOISE                   323
 #define IDD_DIFFUSION                   325
 #define IDD_TRANSLATE                   327
-#define IDD_DIALOG1                     329
 #define IDD_RESIZE                      329
 #define IDC_IMAGE_TYPE                  1000
 #define IDC_WIDTH                       1001
@@ -66,6 +65,15 @@
 #define IDC_NEW_SX                      1018
 #define IDC_DIFFUSION_ITER              1019
 #define IDC_NEW_SY                      1019
+#define IDC_OLD_WIDTH                   1019
+#define IDC_NEW_WIDTH                   1020
+#define IDC_OLD_HEIGHT                  1021
+#define IDC_SPIN_WIDTH                  1022
+#define IDC_NEW_HEIGHT                  1023
+#define IDC_SPIN_HEIGHT                 1024
+#define IDC_ASPECT_RATIO                1025
+#define IDC_COMBO1                      1026
+#define IDC_INTERPOLATION               1026
 #define ID_32771                        32771
 #define ID_WINDOW_DUPLICATE             32772
 #define ID_32773                        32773
@@ -127,9 +135,9 @@
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        331
+#define _APS_NEXT_RESOURCE_VALUE        332
 #define _APS_NEXT_COMMAND_VALUE         32830
-#define _APS_NEXT_CONTROL_VALUE         1019
+#define _APS_NEXT_CONTROL_VALUE         1027
 #define _APS_NEXT_SYMED_VALUE           311
 #endif
 #endif
