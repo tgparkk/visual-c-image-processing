@@ -28,4 +28,6 @@ public:
 	int m_nNewHeight;
 	BOOL m_bAspectRatio;
 	int m_nInterpolation;
+	virtual BOOL OnInitDialog();
+	afx_msg void OnEnChangeNewWidth();
 };
