@@ -72,4 +72,6 @@ public:
 	afx_msg void OnFilterMedian();
 	afx_msg void OnFilterDiffusion();
 	afx_msg void OnImageTranslation();
+	afx_msg void OnImageResize();
+	afx_msg void OnImageRotate();
 };

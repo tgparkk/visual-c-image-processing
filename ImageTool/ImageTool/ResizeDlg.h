@@ -30,4 +30,6 @@ public:
 	int m_nInterpolation;
 	virtual BOOL OnInitDialog();
 	afx_msg void OnEnChangeNewWidth();
+	afx_msg void OnEnChangeNewHeight();
+	afx_msg void OnBnClickedAspectRatio();
 };
