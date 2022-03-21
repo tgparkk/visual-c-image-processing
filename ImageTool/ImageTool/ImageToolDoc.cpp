@@ -36,6 +36,11 @@
 
 #include "RotateDlg.h"
 
+#include <mmsystem.h>
+#pragma comment(lib, "winmm.lib")
+#include "IppImage/IppFourier.h"
+#include "FreqFilteringDlg.h"
+
 #include <propkey.h>
 
 #ifdef _DEBUG
@@ -51,6 +56,8 @@
 #define CONVERT_IMAGE_TO_DIB(img, dib) \
 	IppDib dib; \
 	IppImageToDib(img, dib);
+
+#define SHOW_SPECTRUM_PHASE_IMAGE
 
 IMPLEMENT_DYNCREATE(CImageToolDoc, CDocument)
 
@@ -80,6 +87,10 @@ BEGIN_MESSAGE_MAP(CImageToolDoc, CDocument)
 	ON_COMMAND(ID_IMAGE_ROTATE, &CImageToolDoc::OnImageRotate)
 	ON_COMMAND(ID_IMAGE_MIRROR, &CImageToolDoc::OnImageMirror)
 	ON_COMMAND(ID_IMAGE_FLIP, &CImageToolDoc::OnImageFlip)
+	ON_COMMAND(ID_FOURIER_DFT, &CImageToolDoc::OnFourierDft)
+	ON_COMMAND(ID_FOURIER_DFTRC, &CImageToolDoc::OnFourierDftrc)
+	ON_COMMAND(ID_FOURIER_FFT, &CImageToolDoc::OnFourierFft)
+	ON_COMMAND(ID_FREQ_FILTERING, &CImageToolDoc::OnFreqFiltering)
 END_MESSAGE_MAP()
 
 
@@ -656,4 +667,209 @@ void CImageToolDoc::OnImageFlip()
 
 	AfxPrintInfo(_T("[상하 대칭] 입력 영상: %s"), GetTitle());
 	AfxNewBitmap(dib);
+}
+
+
+void CImageToolDoc::OnFourierDft()
+{
+	// TODO: 여기에 명령 처리기 코드를 추가합니다.
+	int w = m_Dib.GetWidth();
+	int h = m_Dib.GetHeight();
+
+	if (w * h > 128 * 128)
+	{
+		CString msg = _T("영상의 크기가 커서 시간이 오래 걸릴 수 있습니다.\n계속 하시겠습니까?");
+		if (AfxMessageBox(msg, MB_OKCANCEL) != IDOK)
+			return;
+	}
+
+	CWaitCursor wait;
+
+	CONVERT_DIB_TO_BYTEIMAGE(m_Dib, img)
+
+	IppFourier fourier;
+	fourier.SetImage(img);
+
+	DWORD t1 = timeGetTime();
+	fourier.DFT(1);
+
+#ifdef SHOW_SPECTRUM_PHASE_IMAGE
+	IppByteImage imgSpec;
+	fourier.GetSpectrumImage(imgSpec);
+
+	CONVERT_IMAGE_TO_DIB(imgSpec, dibSpec)
+	AfxNewBitmap(dibSpec);
+
+	IppByteImage imgPhase;
+	fourier.GetPhaseImage(imgPhase);
+
+	CONVERT_IMAGE_TO_DIB(imgPhase, dibPhase)
+	AfxNewBitmap(dibPhase);
+#endif
+
+	fourier.DFT(-1);
+	DWORD t2 = timeGetTime();
+
+	IppByteImage img2;
+	fourier.GetImage(img2);
+
+	CONVERT_IMAGE_TO_DIB(img2, dib)
+
+	AfxPrintInfo(_T("[푸리에변환/DFT] 입력 영상: %s, 입력 영상 크기: %dx%d, 처리 시간: %dmsec"),
+			GetTitle(), w, h, t2 - t1);
+	AfxNewBitmap(dib);
+}
+
+
+void CImageToolDoc::OnFourierDftrc()
+{
+	// TODO: 여기에 명령 처리기 코드를 추가합니다.
+	int w = m_Dib.GetWidth();
+	int h = m_Dib.GetHeight();
+
+	if (w * h > 256 * 256)
+	{
+		CString msg = _T("영상의 크기가 커서 시간이 오래 걸릴 수 있습니다.\n계속 하시겠습니까?");
+		if (AfxMessageBox(msg, MB_OKCANCEL) != IDOK)
+			return;
+	}
+
+	CWaitCursor wait;
+
+	CONVERT_DIB_TO_BYTEIMAGE(m_Dib, img)
+
+	IppFourier fourier;
+	fourier.SetImage(img);
+
+	DWORD t1 = timeGetTime();
+	fourier.DFTRC(1);
+
+#ifdef SHOW_SPECTRUM_PHASE_IMAGE
+	IppByteImage imgSpec;
+	fourier.GetSpectrumImage(imgSpec);
+
+	CONVERT_IMAGE_TO_DIB(imgSpec, dibSpec)
+	AfxNewBitmap(dibSpec);
+
+	IppByteImage imgPhase;
+	fourier.GetPhaseImage(imgPhase);
+
+	CONVERT_IMAGE_TO_DIB(imgPhase, dibPhase)
+	AfxNewBitmap(dibPhase);
+#endif
+
+	fourier.DFTRC(-1);
+	DWORD t2 = timeGetTime();
+
+	IppByteImage img2;
+	fourier.GetImage(img2);
+
+	CONVERT_IMAGE_TO_DIB(img2, dib)
+
+	AfxPrintInfo(_T("[푸리에변환/DFTRC] 입력 영상: %s, 입력 영상 크기: %dx%d, 처리 시간: %dmsec"),
+			GetTitle(), w, h, t2 - t1);
+	AfxNewBitmap(dib);
+}
+
+
+void CImageToolDoc::OnFourierFft()
+{
+	// TODO: 여기에 명령 처리기 코드를 추가합니다.
+	int w = m_Dib.GetWidth();
+	int h = m_Dib.GetHeight();
+
+	if (!IsPowerOf2(w) || !IsPowerOf2(h))
+	{
+		AfxMessageBox(_T("가로 또는 세로의 크기가 2의 승수가 아닙니다."));
+		return;
+	}
+
+	CWaitCursor wait;
+
+	CONVERT_DIB_TO_BYTEIMAGE(m_Dib, img)
+
+	IppFourier fourier;
+	fourier.SetImage(img);
+
+	DWORD t1 = timeGetTime();
+	fourier.FFT(1);
+
+#ifdef SHOW_SPECTRUM_PHASE_IMAGE
+	IppByteImage imgSpec;
+	fourier.GetSpectrumImage(imgSpec);
+
+	CONVERT_IMAGE_TO_DIB(imgSpec, dibSpec)
+	AfxNewBitmap(dibSpec);
+
+	IppByteImage imgPhase;
+	fourier.GetPhaseImage(imgPhase);
+
+	CONVERT_IMAGE_TO_DIB(imgPhase, dibPhase)
+	AfxNewBitmap(dibPhase);
+#endif
+
+	fourier.FFT(-1);
+	DWORD t2 = timeGetTime();
+
+	IppByteImage img2;
+	fourier.GetImage(img2);
+
+	CONVERT_IMAGE_TO_DIB(img2, dib)
+
+	AfxPrintInfo(_T("[푸리에변환/FFT] 입력 영상: %s, 입력 영상 크기: %dx%d, 처리 시간: %dmsec"),
+			GetTitle(), w, h, t2 - t1);
+	AfxNewBitmap(dib);
+}
+
+
+void CImageToolDoc::OnFreqFiltering()
+{
+	// TODO: 여기에 명령 처리기 코드를 추가합니다.
+	int w = m_Dib.GetWidth();
+	int h = m_Dib.GetHeight();
+
+	if (!IsPowerOf2(w) || !IsPowerOf2(h))
+	{
+		AfxMessageBox(_T("가로 또는 세로의 크기가 2의 승수가 아닙니다."));
+		return;
+	}
+
+	CFreqFilteringDlg dlg;
+	dlg.m_strRange.Format(_T("(0 ~ %d)"), __min(w / 2, h / 2));
+	if (dlg.DoModal() == IDOK)
+	{
+		CWaitCursor wait;
+		CONVERT_DIB_TO_BYTEIMAGE(m_Dib, img)
+
+		IppFourier fourier;
+		fourier.SetImage(img);
+		fourier.FFT(1);
+
+		if (dlg.m_nFilterType == 0)
+		{
+			if (dlg.m_nFilterShape == 0)
+				fourier.LowPassIdeal(dlg.m_nCutoff);
+			else
+				fourier.LowPassGaussian(dlg.m_nCutoff);
+		}
+		else
+		{
+			if (dlg.m_nFilterShape == 0)
+				fourier.HighPassIdeal(dlg.m_nCutoff);
+			else
+				fourier.HighPassGaussian(dlg.m_nCutoff);
+		}
+
+		fourier.FFT(-1);
+
+		IppByteImage img2;
+		fourier.GetImage(img2);
+		CONVERT_IMAGE_TO_DIB(img2, dib)
+
+		TCHAR* type[] = { _T("저역 통과 필터"), _T("고역 통과 필터") };
+		TCHAR* shape[] = { _T("이상적(Ideal)"), _T("가우시안(Gaussian)") };
+		AfxPrintInfo(_T("[주파수 공간 필터링] 입력 영상: %s, 필터 종류: %s, 필터 모양: %s, 차단 주파수: %d"),
+			GetTitle(), type[dlg.m_nFilterType], shape[dlg.m_nFilterShape], dlg.m_nCutoff);
+		AfxNewBitmap(dib);
+	}
 }

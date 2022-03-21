@@ -74,4 +74,10 @@ public:
 	afx_msg void OnImageTranslation();
 	afx_msg void OnImageResize();
 	afx_msg void OnImageRotate();
+	afx_msg void OnImageMirror();
+	afx_msg void OnImageFlip();
+	afx_msg void OnFourierDft();
+	afx_msg void OnFourierDftrc();
+	afx_msg void OnFourierFft();
+	afx_msg void OnFreqFiltering();
 };

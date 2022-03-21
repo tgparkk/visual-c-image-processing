@@ -37,6 +37,7 @@
 #define IDD_TRANSLATE                   327
 #define IDD_RESIZE                      329
 #define IDD_ROTATE                      332
+#define IDD_FREQUENCY_FILTERING         334
 #define IDC_IMAGE_TYPE                  1000
 #define IDC_WIDTH                       1001
 #define IDC_HEIGHT                      1002
@@ -79,6 +80,10 @@
 #define IDC_ROTATE3                     1029
 #define IDC_ROTATE4                     1030
 #define IDC_ANGLE                       1031
+#define IDC_FILTER_TYPE                 1032
+#define IDC_FILTER_SHAPE                1033
+#define IDC_CUTOFF_FREQ                 1035
+#define IDC_RADIUS_RANGE                1036
 #define ID_32771                        32771
 #define ID_WINDOW_DUPLICATE             32772
 #define ID_32773                        32773
@@ -143,14 +148,23 @@
 #define ID_IMAGE_MIRROR                 32835
 #define ID_32836                        32836
 #define ID_IMAGE_FLIP                   32837
+#define ID_32838                        32838
+#define ID_32839                        32839
+#define ID_32840                        32840
+#define ID_FOURIER_DFT                  32841
+#define ID_FOURIER_DFTRC                32842
+#define ID_32843                        32843
+#define ID_FOURIER_FFT                  32844
+#define ID_32845                        32845
+#define ID_FREQ_FILTERING               32846
 
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        334
-#define _APS_NEXT_COMMAND_VALUE         32838
-#define _APS_NEXT_CONTROL_VALUE         1032
+#define _APS_NEXT_RESOURCE_VALUE        337
+#define _APS_NEXT_COMMAND_VALUE         32847
+#define _APS_NEXT_CONTROL_VALUE         1037
 #define _APS_NEXT_SYMED_VALUE           311
 #endif
 #endif
