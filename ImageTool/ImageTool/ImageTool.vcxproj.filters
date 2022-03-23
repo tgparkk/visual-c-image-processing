@@ -108,6 +108,9 @@
     <ClInclude Include="FreqFilteringDlg.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="IppImage\IppFeature.h">
+      <Filter>IppImage</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ImageTool.cpp">
@@ -184,6 +187,9 @@
     </ClCompile>
     <ClCompile Include="FreqFilteringDlg.cpp">
       <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="IppImage\IppFeature.cpp">
+      <Filter>IppImage</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

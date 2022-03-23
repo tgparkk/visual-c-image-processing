@@ -80,4 +80,7 @@ public:
 	afx_msg void OnFourierDftrc();
 	afx_msg void OnFourierFft();
 	afx_msg void OnFreqFiltering();
+	afx_msg void OnEdgeRoberts();
+	afx_msg void OnEdgePrewitt();
+	afx_msg void OnEdgeSobel();
 };

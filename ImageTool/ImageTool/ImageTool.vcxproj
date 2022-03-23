@@ -201,6 +201,7 @@
     <ClInclude Include="IppImage\IppConvert.h" />
     <ClInclude Include="IppImage\IppDib.h" />
     <ClInclude Include="IppImage\IppEnhance.h" />
+    <ClInclude Include="IppImage\IppFeature.h" />
     <ClInclude Include="IppImage\IppFilter.h" />
     <ClInclude Include="IppImage\IppFourier.h" />
     <ClInclude Include="IppImage\IppGeometry.h" />
@@ -232,6 +233,7 @@
     <ClCompile Include="IppImage\IppConvert.cpp" />
     <ClCompile Include="IppImage\IppDib.cpp" />
     <ClCompile Include="IppImage\IppEnhance.cpp" />
+    <ClCompile Include="IppImage\IppFeature.cpp" />
     <ClCompile Include="IppImage\IppFilter.cpp" />
     <ClCompile Include="IppImage\IppFourier.cpp" />
     <ClCompile Include="IppImage\IppGeometry.cpp" />

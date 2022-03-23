@@ -157,13 +157,20 @@
 #define ID_FOURIER_FFT                  32844
 #define ID_32845                        32845
 #define ID_FREQ_FILTERING               32846
+#define ID_32847                        32847
+#define ID_EDGE_SOBEL                   32848
+#define ID_32849                        32849
+#define ID_EDGE_ROBERTS                 32850
+#define ID_32851                        32851
+#define ID_32852                        32852
+#define ID_EDGE_PREWITT                 32853
 
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        337
-#define _APS_NEXT_COMMAND_VALUE         32847
+#define _APS_NEXT_COMMAND_VALUE         32854
 #define _APS_NEXT_CONTROL_VALUE         1037
 #define _APS_NEXT_SYMED_VALUE           311
 #endif
