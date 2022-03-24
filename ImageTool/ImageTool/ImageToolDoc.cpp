@@ -43,6 +43,8 @@
 
 #include "IppImage/IppFeature.h"
 
+#include "CannyEdgeDlg.h"
+
 #include <propkey.h>
 
 #ifdef _DEBUG
@@ -96,6 +98,7 @@ BEGIN_MESSAGE_MAP(CImageToolDoc, CDocument)
 	ON_COMMAND(ID_EDGE_ROBERTS, &CImageToolDoc::OnEdgeRoberts)
 	ON_COMMAND(ID_EDGE_PREWITT, &CImageToolDoc::OnEdgePrewitt)
 	ON_COMMAND(ID_EDGE_SOBEL, &CImageToolDoc::OnEdgeSobel)
+	ON_COMMAND(ID_EDGE_CANNY, &CImageToolDoc::OnEdgeCanny)
 END_MESSAGE_MAP()
 
 
@@ -916,4 +919,22 @@ void CImageToolDoc::OnEdgeSobel()
 
 	AfxPrintInfo(_T("[마스크 기반 엣지 검출/소벨] 입력 영상: %s"), GetTitle());
 	AfxNewBitmap(dib);
+}
+
+
+void CImageToolDoc::OnEdgeCanny()
+{
+	// TODO: 여기에 명령 처리기 코드를 추가합니다.
+	CCannyEdgeDlg dlg;
+	if (dlg.DoModal() == IDOK)
+	{
+		CONVERT_DIB_TO_BYTEIMAGE(m_Dib, img)
+		IppByteImage imgEdge;
+		IppEdgeCanny(img, imgEdge, dlg.m_fSigma, dlg.m_fLowTh, dlg.m_fHighTh);
+		CONVERT_IMAGE_TO_DIB(imgEdge, dib)
+
+		AfxPrintInfo(_T("[캐니 엣지 검출] 입력 영상: %s, sigma: %4.2f, Low Th: %4.2f, High Th: %4.2f"),
+				GetTitle(), dlg.m_fSigma, dlg.m_fLowTh, dlg.m_fHighTh);
+		AfxNewBitmap(dib);
+	}
 }

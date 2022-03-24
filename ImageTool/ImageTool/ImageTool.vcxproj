@@ -187,6 +187,7 @@
     <ClInclude Include="AddNoiseDlg.h" />
     <ClInclude Include="ArithmeticLogicaDlg.h" />
     <ClInclude Include="BrightnessContrastDlg.h" />
+    <ClInclude Include="CannyEdgeDlg.h" />
     <ClInclude Include="ChildFrm.h" />
     <ClInclude Include="DiffusionDlg.h" />
     <ClInclude Include="FileNewDlg.h" />
@@ -220,6 +221,7 @@
     <ClCompile Include="AddNoiseDlg.cpp" />
     <ClCompile Include="ArithmeticLogicaDlg.cpp" />
     <ClCompile Include="BrightnessContrastDlg.cpp" />
+    <ClCompile Include="CannyEdgeDlg.cpp" />
     <ClCompile Include="ChildFrm.cpp" />
     <ClCompile Include="DiffusionDlg.cpp" />
     <ClCompile Include="FileNewDlg.cpp" />
