@@ -45,6 +45,9 @@
 
 #include "CannyEdgeDlg.h"
 
+#include <algorithm>
+#include <functional>
+
 #include <propkey.h>
 
 #ifdef _DEBUG
@@ -99,6 +102,7 @@ BEGIN_MESSAGE_MAP(CImageToolDoc, CDocument)
 	ON_COMMAND(ID_EDGE_PREWITT, &CImageToolDoc::OnEdgePrewitt)
 	ON_COMMAND(ID_EDGE_SOBEL, &CImageToolDoc::OnEdgeSobel)
 	ON_COMMAND(ID_EDGE_CANNY, &CImageToolDoc::OnEdgeCanny)
+	ON_COMMAND(ID_HOUGH_LINE, &CImageToolDoc::OnHoughLine)
 END_MESSAGE_MAP()
 
 
@@ -937,4 +941,35 @@ void CImageToolDoc::OnEdgeCanny()
 				GetTitle(), dlg.m_fSigma, dlg.m_fLowTh, dlg.m_fHighTh);
 		AfxNewBitmap(dib);
 	}
+}
+
+
+void CImageToolDoc::OnHoughLine()
+{
+	// TODO: 여기에 명령 처리기 코드를 추가합니다.
+	CONVERT_DIB_TO_BYTEIMAGE(m_Dib, img)
+	IppByteImage imgEdge;
+	IppEdgeCanny(img, imgEdge, 1.4f, 30.f, 60.f);
+
+	std::vector<IppLineParam> lines;
+	IppHoughLine(imgEdge, lines);
+
+	if (lines.size() == 0)
+	{
+		AfxMessageBox(_T("검출된 직선이 없습니다."));
+		return;
+	}
+
+	std::sort(lines.begin(), lines.end());
+
+	// 최대 10개의 직선만 화면에 그려줌.
+	int cnt = min(10, lines.size());
+	for (int i = 0; i < cnt; i++)
+		IppDrawLine(img, lines[i], 255);
+
+	CONVERT_IMAGE_TO_DIB(img, dib)
+
+	AfxPrintInfo(_T("[허프 선 검출] 입력 영상: %s, 중요 직선: rho = %4.2f, angle = %4.2f, vote = %d"),
+			GetTitle(), lines[0].rho, (lines[0].ang * 180 / 3.14f), lines[0].vote);
+	AfxNewBitmap(dib);
 }

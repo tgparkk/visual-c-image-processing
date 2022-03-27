@@ -170,13 +170,15 @@
 #define ID_EDGE_PREWITT                 32853
 #define ID_32854                        32854
 #define ID_EDGE_CANNY                   32855
+#define ID_32856                        32856
+#define ID_HOUGH_LINE                   32857
 
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        339
-#define _APS_NEXT_COMMAND_VALUE         32856
+#define _APS_NEXT_COMMAND_VALUE         32858
 #define _APS_NEXT_CONTROL_VALUE         1038
 #define _APS_NEXT_SYMED_VALUE           311
 #endif
