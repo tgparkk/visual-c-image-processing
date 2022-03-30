@@ -195,6 +195,7 @@
     <ClInclude Include="FreqFilteringDlg.h" />
     <ClInclude Include="GammaCorrectionDlg.h" />
     <ClInclude Include="GaussianDlg.h" />
+    <ClInclude Include="HarrisCornerDlg.h" />
     <ClInclude Include="HistogramDlg.h" />
     <ClInclude Include="ImageTool.h" />
     <ClInclude Include="ImageToolDoc.h" />
@@ -228,6 +229,7 @@
     <ClCompile Include="FreqFilteringDlg.cpp" />
     <ClCompile Include="GammaCorrectionDlg.cpp" />
     <ClCompile Include="GaussianDlg.cpp" />
+    <ClCompile Include="HarrisCornerDlg.cpp" />
     <ClCompile Include="HistogramDlg.cpp" />
     <ClCompile Include="ImageTool.cpp" />
     <ClCompile Include="ImageToolDoc.cpp" />

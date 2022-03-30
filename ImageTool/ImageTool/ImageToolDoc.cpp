@@ -45,6 +45,8 @@
 
 #include "CannyEdgeDlg.h"
 
+#include "HarrisCornerDlg.h"
+
 #include <algorithm>
 #include <functional>
 
@@ -103,6 +105,7 @@ BEGIN_MESSAGE_MAP(CImageToolDoc, CDocument)
 	ON_COMMAND(ID_EDGE_SOBEL, &CImageToolDoc::OnEdgeSobel)
 	ON_COMMAND(ID_EDGE_CANNY, &CImageToolDoc::OnEdgeCanny)
 	ON_COMMAND(ID_HOUGH_LINE, &CImageToolDoc::OnHoughLine)
+	ON_COMMAND(ID_HARRIS_CORNER, &CImageToolDoc::OnHarrisCorner)
 END_MESSAGE_MAP()
 
 
@@ -972,4 +975,36 @@ void CImageToolDoc::OnHoughLine()
 	AfxPrintInfo(_T("[허프 선 검출] 입력 영상: %s, 중요 직선: rho = %4.2f, angle = %4.2f, vote = %d"),
 			GetTitle(), lines[0].rho, (lines[0].ang * 180 / 3.14f), lines[0].vote);
 	AfxNewBitmap(dib);
+}
+
+
+void CImageToolDoc::OnHarrisCorner()
+{
+	// TODO: 여기에 명령 처리기 코드를 추가합니다.
+	CHarrisCornerDlg dlg;
+	if (dlg.DoModal() == IDOK)
+	{
+		CONVERT_DIB_TO_BYTEIMAGE(m_Dib, img)
+		std::vector<IppPoint> corners;
+		IppHarrisCorner(img, corners, dlg.m_nHarrisTh);
+
+		BYTE** ptr = img.GetPixels2D();
+
+		int x, y;
+		for (IppPoint cp : corners)
+		{
+			x = cp.x;
+			y = cp.y;
+
+			ptr[y - 1][x - 1] = ptr[y - 1][x] = ptr[y - 1][x + 1] = 0;
+			ptr[y][x - 1] = ptr[y][x] = ptr[y][x + 1] = 0;
+			ptr[y + 1][x - 1] = ptr[y + 1][x] = ptr[y + 1][x + 1] = 0;
+		}
+
+		CONVERT_IMAGE_TO_DIB(img, dib)
+
+		AfxPrintInfo(_T("[해리스 코너 검출] 입력 영상: %s, Threshold: %d, 검출된 코너 갯수: %d"),
+				GetTitle(), dlg.m_nHarrisTh, corners.size());
+		AfxNewBitmap(dib);
+	}
 }
