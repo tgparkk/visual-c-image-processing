@@ -47,6 +47,8 @@
 
 #include "HarrisCornerDlg.h"
 
+#include "IppImage/IppColor.h"
+
 #include <algorithm>
 #include <functional>
 
@@ -65,6 +67,11 @@
 #define CONVERT_IMAGE_TO_DIB(img, dib) \
 	IppDib dib; \
 	IppImageToDib(img, dib);
+
+#define CONVERT_DIB_TO_RGBIMAGE(m_dib, img) \
+	IppRgbImage img; \
+	IppDibToImage(m_dib, img);
+
 
 #define SHOW_SPECTRUM_PHASE_IMAGE
 
@@ -106,6 +113,8 @@ BEGIN_MESSAGE_MAP(CImageToolDoc, CDocument)
 	ON_COMMAND(ID_EDGE_CANNY, &CImageToolDoc::OnEdgeCanny)
 	ON_COMMAND(ID_HOUGH_LINE, &CImageToolDoc::OnHoughLine)
 	ON_COMMAND(ID_HARRIS_CORNER, &CImageToolDoc::OnHarrisCorner)
+	ON_COMMAND(ID_COLOR_GRAYSCALE, &CImageToolDoc::OnColorGrayscale)
+	ON_UPDATE_COMMAND_UI(ID_COLOR_GRAYSCALE, &CImageToolDoc::OnUpdateColorGrayscale)
 END_MESSAGE_MAP()
 
 
@@ -152,7 +161,7 @@ BOOL CImageToolDoc::OnNewDocument()
 	}
 	
 
-	return TRUE;
+	return ret;
 }
 
 
@@ -287,28 +296,41 @@ void CImageToolDoc::OnEditCopy()
 void CImageToolDoc::OnImageInverse()
 {
 	// TODO: Add your command handler code here
-	//IppByteImage img;
-	//IppDibToImage(m_Dib, img);
-	CONVERT_DIB_TO_BYTEIMAGE(m_Dib, img)
+	if (m_Dib.GetBitCount() == 8)
+	{
+		//IppByteImage img;
+		//IppDibToImage(m_Dib, img);
+		CONVERT_DIB_TO_BYTEIMAGE(m_Dib, img)
 
-	IppInverse(img);
+		IppInverse(img);
 
-	//IppDib dib;
-	//IppImageToDib(img, dib);
-	CONVERT_IMAGE_TO_DIB(img, dib)
+		//IppDib dib;
+		//IppImageToDib(img, dib);
+		CONVERT_IMAGE_TO_DIB(img, dib)
 
-	AfxPrintInfo(_T("[반전] 입력 영상: %s"), GetTitle());
-	
-	//AfxNewBitmap(dib); // 새로운 뷰에 그리기
-	UpdateAllViews(NULL); // 다시 그리기
+		AfxPrintInfo(_T("[반전] 입력 영상: %s"), GetTitle());
+		
+		AfxNewBitmap(dib); // 새로운 뷰에 그리기
+		//UpdateAllViews(NULL); // 다시 그리기
+	}
+	else if (m_Dib.GetBitCount() == 24)
+	{
+		CONVERT_DIB_TO_RGBIMAGE(m_Dib, img)
+		IppInverse(img);
+		CONVERT_IMAGE_TO_DIB(img, dib)
 
+		AfxPrintInfo(_T("[반전] 입력 영상: %s"), GetTitle());
+		
+		AfxNewBitmap(dib); // 새로운 뷰에 그리기
+		//UpdateAllViews(NULL); // 다시 그리기
+	}
 }
 
 
 void CImageToolDoc::OnUpdateImageInverse(CCmdUI* pCmdUI)
 {
 	// TODO: Add your command update UI handler code here
-	pCmdUI->Enable(m_Dib.GetBitCount() == 8);
+	pCmdUI->Enable(m_Dib.GetBitCount() == 8 || m_Dib.GetBitCount() == 24);
 }
 
 
@@ -1007,4 +1029,23 @@ void CImageToolDoc::OnHarrisCorner()
 				GetTitle(), dlg.m_nHarrisTh, corners.size());
 		AfxNewBitmap(dib);
 	}
+}
+
+void CImageToolDoc::OnColorGrayscale()
+{
+	// TODO: 여기에 명령 처리기 코드를 추가합니다.
+	CONVERT_DIB_TO_RGBIMAGE(m_Dib, imgColor)
+	IppByteImage imgGray;
+	imgGray.Convert(imgColor);
+	CONVERT_IMAGE_TO_DIB(imgGray, dib)
+
+	AfxPrintInfo(_T("[그레이스케일 변환] 입력 영상: %s"), GetTitle());
+	AfxNewBitmap(dib);
+}
+
+
+void CImageToolDoc::OnUpdateColorGrayscale(CCmdUI* pCmdUI)
+{
+	// TODO: 여기에 명령 업데이트 UI 처리기 코드를 추가합니다.
+	pCmdUI->Enable(m_Dib.GetBitCount() == 24);
 }

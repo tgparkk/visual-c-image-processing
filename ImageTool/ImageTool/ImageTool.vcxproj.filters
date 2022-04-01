@@ -48,15 +48,6 @@
     <ClInclude Include="pch.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="IppImage\IppConvert.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="IppImage\IppDib.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="IppImage\IppImage.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="IppImage\RGBBYTE.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
@@ -117,6 +108,18 @@
     <ClInclude Include="HarrisCornerDlg.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="IppImage\IppColor.h">
+      <Filter>IppImage</Filter>
+    </ClInclude>
+    <ClInclude Include="IppImage\IppDib.h">
+      <Filter>IppImage</Filter>
+    </ClInclude>
+    <ClInclude Include="IppImage\IppConvert.h">
+      <Filter>IppImage</Filter>
+    </ClInclude>
+    <ClInclude Include="IppImage\IppImage.h">
+      <Filter>IppImage</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ImageTool.cpp">
@@ -138,12 +141,6 @@
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="pch.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="IppImage\IppConvert.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="IppImage\IppDib.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="FileNewDlg.cpp">
@@ -202,6 +199,15 @@
     </ClCompile>
     <ClCompile Include="HarrisCornerDlg.cpp">
       <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="IppImage\IppColor.cpp">
+      <Filter>IppImage</Filter>
+    </ClCompile>
+    <ClCompile Include="IppImage\IppDib.cpp">
+      <Filter>IppImage</Filter>
+    </ClCompile>
+    <ClCompile Include="IppImage\IppConvert.cpp">
+      <Filter>IppImage</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

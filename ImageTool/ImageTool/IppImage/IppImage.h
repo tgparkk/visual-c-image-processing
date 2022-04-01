@@ -3,13 +3,15 @@
 #include <memory.h>
 #include "RGBBYTE.h"
 
+#define RGB2GRAY(r,g,b) (0.299*(r) + 0.587*(g) + 0.114*(b))
+
 template<typename T>
 class IppImage
 {
 protected:
 	int     width;  // 영상의 가로 크기 (픽셀 단위)
 	int     height; // 영상의 세로 크기 (픽셀 단위)
-	T** pixels; // 픽셀 데이터
+	T**		pixels; // 픽셀 데이터
 
 public:
 	// 생성자와 소멸자
@@ -34,6 +36,7 @@ public:
 
 	// 픽셀 값 설정
 	template<typename U> void Convert(const IppImage<U>& img, bool use_limit = false);
+	void Convert(const IppImage<RGBBYTE>& img);
 
 	// 영상 정보 반환
 	int     GetWidth()    const { return width; }
@@ -141,6 +144,19 @@ void IppImage<T>::Convert(const IppImage<U>& img, bool use_limit)
 	else
 		for (int i = 0; i < size; i++)
 			p1[i] = static_cast<T>(p2[i]);
+}
+
+template<typename T>
+void IppImage<T>::Convert(const IppImage<RGBBYTE>& img)
+{
+	CreateImage(img.GetWidth(), img.GetHeight());
+
+	int size = GetSize();
+	T* p1 = GetPixels();
+	RGBBYTE* p2 = img.GetPixels();
+
+	for (int i = 0; i < size; i++)
+		p1[i] = static_cast<T>(RGB2GRAY(p2[i].r, p2[i].g, p2[i].b));
 }
 
 // 다양한 자료형에 대한 IppImage 정의
