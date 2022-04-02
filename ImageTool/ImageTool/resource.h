@@ -178,13 +178,20 @@
 #define ID_HARRIS_CORNER                32859
 #define ID_32860                        32860
 #define ID_COLOR_GRAYSCALE              32861
+#define ID_32862                        32862
+#define ID_32863                        32863
+#define ID_32864                        32864
+#define ID_32865                        32865
+#define ID_COLOR_SPLIT_RGB              32866
+#define ID_COLOR_SPLIT_HSI              32867
+#define ID_COLOR_SPLIT_YUV              32868
 
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        341
-#define _APS_NEXT_COMMAND_VALUE         32862
+#define _APS_NEXT_COMMAND_VALUE         32869
 #define _APS_NEXT_CONTROL_VALUE         1040
 #define _APS_NEXT_SYMED_VALUE           311
 #endif

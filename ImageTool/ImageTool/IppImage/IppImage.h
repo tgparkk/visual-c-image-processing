@@ -174,3 +174,9 @@ inline T limit(const T& value)
 {
 	return ((value > 255) ? 255 : ((value < 0) ? 0 : value));
 }
+
+template<typename T>
+inline T limit(const T& value, const T& lower, const T& upper)
+{
+	return ((value > upper) ? upper : ((value < lower) ? lower : value));
+}
