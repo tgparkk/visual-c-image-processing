@@ -40,6 +40,7 @@
 #define IDD_FREQUENCY_FILTERING         334
 #define IDD_CANNY_EDGE                  337
 #define IDD_HARRIS_CORNER               339
+#define IDD_COLOR_COMBINE               341
 #define IDC_IMAGE_TYPE                  1000
 #define IDC_WIDTH                       1001
 #define IDC_HEIGHT                      1002
@@ -53,6 +54,7 @@
 #define IDC_COMBO_IMAGE1                1008
 #define IDC_COMBO_IMAGE2                1009
 #define IDC_FUNCTION1                   1010
+#define IDC_COMBO_IMAGE3                1010
 #define IDC_FUNCTION2                   1011
 #define IDC_SIGMA_SLIDER                1011
 #define IDC_FUNCTION3                   1012
@@ -90,6 +92,7 @@
 #define IDC_CANNY_SIGMA                 1038
 #define IDC_HIGH_THRESHOLD              1039
 #define IDC_HARRIS_THRESHOLD            1039
+#define IDC_COLOR_SPACE                 1040
 #define ID_32771                        32771
 #define ID_WINDOW_DUPLICATE             32772
 #define ID_32773                        32773
@@ -185,14 +188,23 @@
 #define ID_COLOR_SPLIT_RGB              32866
 #define ID_COLOR_SPLIT_HSI              32867
 #define ID_COLOR_SPLIT_YUV              32868
+#define ID_32869                        32869
+#define ID_32870                        32870
+#define ID_32871                        32871
+#define ID_32872                        32872
+#define ID_COLOR_COMBINE_RGB            32873
+#define ID_COLOR_COMBINE_HSI            32874
+#define ID_COLOR_COMBINE_YUV            32875
+#define ID_32876                        32876
+#define ID_COLOR_EDGE                   32877
 
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        341
-#define _APS_NEXT_COMMAND_VALUE         32869
-#define _APS_NEXT_CONTROL_VALUE         1040
+#define _APS_NEXT_RESOURCE_VALUE        343
+#define _APS_NEXT_COMMAND_VALUE         32878
+#define _APS_NEXT_CONTROL_VALUE         1043
 #define _APS_NEXT_SYMED_VALUE           311
 #endif
 #endif
