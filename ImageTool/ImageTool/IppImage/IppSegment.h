@@ -5,3 +5,5 @@
 #include "IppFeature.h"
 
 void IppBinarization(IppByteImage& imgSrc, IppByteImage& imgDst, int threshold);
+
+int  IppBinarizationIterative(IppByteImage& imgSrc);

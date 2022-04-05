@@ -51,6 +51,9 @@
 
 #include "ColorCombineDlg.h"
 
+#include "BinarizationDlg.h"
+#include "IppImage/IppSegment.h"
+
 #include <algorithm>
 #include <functional>
 
@@ -129,6 +132,7 @@ BEGIN_MESSAGE_MAP(CImageToolDoc, CDocument)
 	ON_COMMAND(ID_COLOR_EDGE, &CImageToolDoc::OnColorEdge)
 	ON_UPDATE_COMMAND_UI(ID_COLOR_EDGE, &CImageToolDoc::OnUpdateColorEdge)
 	ON_UPDATE_COMMAND_UI(ID_HISTO_EQUALIZATION, &CImageToolDoc::OnUpdateHistoEqualization)
+	ON_COMMAND(ID_SEGMENT_BINARIZATION, &CImageToolDoc::OnSegmentBinarization)
 END_MESSAGE_MAP()
 
 
@@ -1270,4 +1274,21 @@ void CImageToolDoc::OnUpdateColorEdge(CCmdUI* pCmdUI)
 {
 	// TODO: 여기에 명령 업데이트 UI 처리기 코드를 추가합니다.
 	pCmdUI->Enable(m_Dib.GetBitCount() == 24);
+}
+
+void CImageToolDoc::OnSegmentBinarization()
+{
+	// TODO: 여기에 명령 처리기 코드를 추가합니다.
+	CBinarizationDlg dlg;
+	dlg.SetImage(m_Dib);
+	if (dlg.DoModal() == IDOK)
+	{
+		CONVERT_DIB_TO_BYTEIMAGE(m_Dib, img)
+		IppByteImage imgRes;
+		IppBinarization(img, imgRes, dlg.m_nThreshold);
+		CONVERT_IMAGE_TO_DIB(imgRes, dib)
+
+		AfxPrintInfo(_T("[이진화] 입력 영상: %s, 임계값: %d"), GetTitle(), dlg.m_nThreshold);
+		AfxNewBitmap(dib);
+	}
 }

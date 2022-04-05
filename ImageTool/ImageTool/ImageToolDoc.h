@@ -100,4 +100,5 @@ public:
 	afx_msg void OnColorEdge();
 	afx_msg void OnUpdateColorEdge(CCmdUI* pCmdUI);
 	afx_msg void OnUpdateHistoEqualization(CCmdUI* pCmdUI);
+	afx_msg void OnSegmentBinarization();
 };
