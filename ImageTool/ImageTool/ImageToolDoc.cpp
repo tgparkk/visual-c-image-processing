@@ -133,6 +133,7 @@ BEGIN_MESSAGE_MAP(CImageToolDoc, CDocument)
 	ON_UPDATE_COMMAND_UI(ID_COLOR_EDGE, &CImageToolDoc::OnUpdateColorEdge)
 	ON_UPDATE_COMMAND_UI(ID_HISTO_EQUALIZATION, &CImageToolDoc::OnUpdateHistoEqualization)
 	ON_COMMAND(ID_SEGMENT_BINARIZATION, &CImageToolDoc::OnSegmentBinarization)
+	ON_COMMAND(ID_SEGMENT_LABELING, &CImageToolDoc::OnSegmentLabeling)
 END_MESSAGE_MAP()
 
 
@@ -1291,4 +1292,44 @@ void CImageToolDoc::OnSegmentBinarization()
 		AfxPrintInfo(_T("[이진화] 입력 영상: %s, 임계값: %d"), GetTitle(), dlg.m_nThreshold);
 		AfxNewBitmap(dib);
 	}
+}
+
+
+void CImageToolDoc::OnSegmentLabeling()
+{
+	// TODO: 여기에 명령 처리기 코드를 추가합니다.
+	CONVERT_DIB_TO_BYTEIMAGE(m_Dib, img)
+	IppIntImage imgLabel;
+	std::vector<IppLabelInfo> labels;
+	int label_cnt = IppLabeling(img, imgLabel, labels);
+
+	// 객체를 감싸는 사각형 그리기
+	BYTE** ptr = img.GetPixels2D();
+	for (IppLabelInfo& info : labels)
+	{
+		for (int j = info.miny; j <= info.maxy; j++)
+			ptr[j][info.minx] = ptr[j][info.maxx] = 128;
+
+		for (int i = info.minx; i <= info.maxx; i++)
+			ptr[info.miny][i] = ptr[info.maxy][i] = 128;
+	}
+
+#if 0
+	for (IppLabelInfo& info : labels)
+	{
+		// 각각의 객체를 새 창으로 띄우기
+		IppByteImage imgObj(info.maxx - info.minx + 1, info.maxy - info.miny + 1);
+		BYTE** pObj = imgObj.GetPixels2D();
+		for (IppPoint& pt : info.pixels)
+			pObj[pt.y - info.miny][pt.x - info.minx] = 255;
+
+		CONVERT_IMAGE_TO_DIB(imgObj, dibObj)
+			AfxNewBitmap(dibObj);
+	}
+#endif
+
+	CONVERT_IMAGE_TO_DIB(img, dib)
+
+	AfxPrintInfo(_T("[레이블링] 입력 영상: %s, 객체 개수: %d"), GetTitle(), label_cnt);
+	AfxNewBitmap(dib);
 }

@@ -63,3 +63,157 @@ int IppBinarizationIterative(IppByteImage& imgSrc)
 
 	return T;
 }
+
+int IppLabeling(IppByteImage& imgSrc, IppIntImage& imgDst, std::vector<IppLabelInfo>& labels)
+{
+	int w = imgSrc.GetWidth();
+	int h = imgSrc.GetHeight();
+
+	BYTE** pSrc = imgSrc.GetPixels2D();
+
+	//-------------------------------------------------------------------------
+	// 임시로 레이블을 저장할 메모리 공간과 등가 테이블 생성
+	//-------------------------------------------------------------------------
+
+	IppIntImage imgMap(w, h);
+	int** pMap = imgMap.GetPixels2D();
+
+	const int MAX_LABEL = 100000;
+	int eq_tbl[MAX_LABEL][2] = { { 0, }, };
+
+	//-------------------------------------------------------------------------
+	// 첫 번째 스캔 - 초기 레이블 지정 및 등가 테이블 생성
+	//-------------------------------------------------------------------------
+
+	register int i, j;
+	int label = 0, maxl, minl, min_eq, max_eq;
+
+	for (j = 1; j < h; j++)
+		for (i = 1; i < w; i++)
+		{
+			if (pSrc[j][i] == 255)
+			{
+				// 바로 위 픽셀과 왼쪽 픽셀 모두에 레이블이 존재하는 경우
+				if ((pMap[j - 1][i] != 0) && (pMap[j][i - 1] != 0))
+				{
+					if (pMap[j - 1][i] == pMap[j][i - 1])
+					{
+						// 두 레이블이 서로 같은 경우
+						pMap[j][i] = pMap[j - 1][i];
+					}
+					else
+					{
+						// 두 레이블이 서로 다른 경우, 작은 레이블을 부여
+						maxl = max(pMap[j - 1][i], pMap[j][i - 1]);
+						minl = min(pMap[j - 1][i], pMap[j][i - 1]);
+
+						pMap[j][i] = minl;
+
+						// 등가 테이블 조정
+						min_eq = min(eq_tbl[maxl][1], eq_tbl[minl][1]);
+						max_eq = max(eq_tbl[maxl][1], eq_tbl[minl][1]);
+
+						eq_tbl[eq_tbl[max_eq][1]][1] = min_eq;
+					}
+				}
+				else if (pMap[j - 1][i] != 0)
+				{
+					// 바로 위 픽셀에만 레이블이 존재할 경우
+					pMap[j][i] = pMap[j - 1][i];
+				}
+				else if (pMap[j][i - 1] != 0)
+				{
+					// 바로 왼쪽 픽셀에만 레이블이 존재할 경우
+					pMap[j][i] = pMap[j][i - 1];
+				}
+				else
+				{
+					// 이웃에 레이블이 존재하지 않으면 새로운 레이블을 부여
+					label++;
+					pMap[j][i] = label;
+					eq_tbl[label][0] = label;
+					eq_tbl[label][1] = label;
+				}
+			}
+		}
+
+	//-------------------------------------------------------------------------
+	// 등가 테이블 정리
+	//-------------------------------------------------------------------------
+
+	int temp;
+	for (i = 1; i <= label; i++)
+	{
+		temp = eq_tbl[i][1];
+		if (temp != eq_tbl[i][0])
+			eq_tbl[i][1] = eq_tbl[temp][1];
+	}
+
+	// 등가 테이블의 레이블을 1부터 차례대로 증가시키기
+
+	int* hash = new int[label + 1];
+	memset(hash, 0, sizeof(int) * (label + 1));
+
+	for (i = 1; i <= label; i++)
+		hash[eq_tbl[i][1]] = eq_tbl[i][1];
+
+	int label_cnt = 1;
+	for (i = 1; i <= label; i++)
+		if (hash[i] != 0)
+			hash[i] = label_cnt++;
+
+	for (i = 1; i <= label; i++)
+		eq_tbl[i][1] = hash[eq_tbl[i][1]];
+
+	delete[] hash;
+
+	//-------------------------------------------------------------------------
+	// 두 번째 스캔 - 등가 테이블을 이용하여 모든 픽셀에 고유의 레이블 부여
+	//-------------------------------------------------------------------------
+
+	imgDst.CreateImage(w, h);
+	int** pDst = imgDst.GetPixels2D();
+
+	int idx;
+	for (j = 1; j < h; j++)
+		for (i = 1; i < w; i++)
+		{
+			if (pMap[j][i] != 0)
+			{
+				idx = pMap[j][i];
+				pDst[j][i] = eq_tbl[idx][1];
+			}
+		}
+
+	//-------------------------------------------------------------------------
+	// IppLabelInfo 정보 작성
+	//-------------------------------------------------------------------------
+
+	labels.resize(label_cnt - 1);
+
+	IppLabelInfo* pLabel;
+	for (j = 1; j < h; j++)
+		for (i = 1; i < w; i++)
+		{
+			if (pDst[j][i] != 0)
+			{
+				pLabel = &labels.at(pDst[j][i] - 1);
+				pLabel->pixels.push_back(IppPoint(i, j));
+				pLabel->cx += i;
+				pLabel->cy += j;
+
+				if (i < pLabel->minx) pLabel->minx = i;
+				if (i > pLabel->maxx) pLabel->maxx = i;
+				if (j < pLabel->miny) pLabel->miny = j;
+				if (j > pLabel->maxy) pLabel->maxy = j;
+			}
+		}
+
+	for (IppLabelInfo& label : labels)
+	{
+		label.cx /= label.pixels.size();
+		label.cy /= label.pixels.size();
+	}
+
+	return (label_cnt - 1);
+}
