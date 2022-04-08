@@ -134,6 +134,7 @@ BEGIN_MESSAGE_MAP(CImageToolDoc, CDocument)
 	ON_UPDATE_COMMAND_UI(ID_HISTO_EQUALIZATION, &CImageToolDoc::OnUpdateHistoEqualization)
 	ON_COMMAND(ID_SEGMENT_BINARIZATION, &CImageToolDoc::OnSegmentBinarization)
 	ON_COMMAND(ID_SEGMENT_LABELING, &CImageToolDoc::OnSegmentLabeling)
+	ON_COMMAND(ID_CONTOUR_TRACING, &CImageToolDoc::OnContourTracing)
 END_MESSAGE_MAP()
 
 
@@ -1331,5 +1332,31 @@ void CImageToolDoc::OnSegmentLabeling()
 	CONVERT_IMAGE_TO_DIB(img, dib)
 
 	AfxPrintInfo(_T("[레이블링] 입력 영상: %s, 객체 개수: %d"), GetTitle(), label_cnt);
+	AfxNewBitmap(dib);
+}
+
+
+void CImageToolDoc::OnContourTracing()
+{
+	// TODO: 여기에 명령 처리기 코드를 추가합니다.
+	CONVERT_DIB_TO_BYTEIMAGE(m_Dib, img)
+	IppIntImage imgLabel;
+	std::vector<IppLabelInfo> labels;
+	int label_cnt = IppLabeling(img, imgLabel, labels);
+
+	IppByteImage imgContour(img.GetWidth(), img.GetHeight());
+	BYTE** ptr = imgContour.GetPixels2D();
+	for (IppLabelInfo& info : labels)
+	{
+		std::vector<IppPoint> cp;
+		IppContourTracing(img, info.pixels[0].x, info.pixels[0].y, cp);
+
+		for (IppPoint& pt : cp)
+			ptr[pt.y][pt.x] = 255;
+	}
+
+	CONVERT_IMAGE_TO_DIB(imgContour, dib)
+
+	AfxPrintInfo(_T("[외곽선 추적] 입력 영상: %s, 객체 개수: %d"), GetTitle(), label_cnt);
 	AfxNewBitmap(dib);
 }

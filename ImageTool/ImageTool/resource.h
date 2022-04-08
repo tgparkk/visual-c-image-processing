@@ -205,13 +205,15 @@
 #define ID_SEGMENT_BINARIZATION         32879
 #define ID_32880                        32880
 #define ID_SEGMENT_LABELING             32881
+#define ID_32882                        32882
+#define ID_CONTOUR_TRACING              32883
 
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        345
-#define _APS_NEXT_COMMAND_VALUE         32882
+#define _APS_NEXT_COMMAND_VALUE         32884
 #define _APS_NEXT_CONTROL_VALUE         1046
 #define _APS_NEXT_SYMED_VALUE           311
 #endif

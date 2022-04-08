@@ -102,4 +102,5 @@ public:
 	afx_msg void OnUpdateHistoEqualization(CCmdUI* pCmdUI);
 	afx_msg void OnSegmentBinarization();
 	afx_msg void OnSegmentLabeling();
+	afx_msg void OnContourTracing();
 };

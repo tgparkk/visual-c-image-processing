@@ -217,3 +217,75 @@ int IppLabeling(IppByteImage& imgSrc, IppIntImage& imgDst, std::vector<IppLabelI
 
 	return (label_cnt - 1);
 }
+
+void IppContourTracing(IppByteImage& imgSrc, int sx, int sy, std::vector<IppPoint>& cp)
+{
+	int w = imgSrc.GetWidth();
+	int h = imgSrc.GetHeight();
+
+	BYTE** pSrc = imgSrc.GetPixels2D();
+
+	// 외곽선 좌표를 저장할 구조체 초기화
+	cp.clear();
+
+	// 외곽선 추적 시작 픽셀이 객체가 아니면 종료
+	if (pSrc[sy][sx] != 255)
+		return;
+
+	int x, y, nx, ny;
+	int d, cnt;
+	int  dir[8][2] = { // 진행 방향을 나타내는 배열
+		{  1,  0 },
+		{  1,  1 },
+		{  0,  1 },
+		{ -1,  1 },
+		{ -1,  0 },
+		{ -1, -1 },
+		{  0, -1 },
+		{  1, -1 }
+	};
+
+	x = sx;
+	y = sy;
+	d = cnt = 0;
+
+	while (1)
+	{
+		nx = x + dir[d][0];
+		ny = y + dir[d][1];
+
+		if (nx < 0 || nx >= w || ny < 0 || ny >= h || pSrc[ny][nx] == 0)
+		{
+			// 진행 방향에 있는 픽셀이 객체가 아닌 경우,
+			// 시계 방향으로 진행 방향을 바꾸고 다시 시도한다.
+
+			if (++d > 7) d = 0;
+			cnt++;
+
+			// 8방향 모두 배경인 경우 
+			if (cnt >= 8)
+			{
+				cp.push_back(IppPoint(x, y));
+				break;  // 외곽선 추적을 끝냄.
+			}
+		}
+		else
+		{
+			// 진행 방향의 픽셀이 객체일 경우, 현재 점을 외곽선 정보에 저장
+			cp.push_back(IppPoint(x, y));
+
+			// 진행 방향으로 이동
+			x = nx;
+			y = ny;
+
+			// 방향 정보 초기화
+			cnt = 0;
+			d = (d + 6) % 8;	// d = d - 2 와 같은 형태
+		}
+
+		// 시작점으로 돌아왔고, 진행 방향이 초기화된 경우
+		// 외곽선 추적을 끝낸다.
+		if (x == sx && y == sy && d == 0)
+			break;
+	}
+}

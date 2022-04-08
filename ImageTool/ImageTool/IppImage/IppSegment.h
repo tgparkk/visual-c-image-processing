@@ -23,3 +23,4 @@ void IppBinarization(IppByteImage& imgSrc, IppByteImage& imgDst, int threshold);
 int  IppBinarizationIterative(IppByteImage& imgSrc);
 
 int  IppLabeling(IppByteImage& imgSrc, IppIntImage& imgDst, std::vector<IppLabelInfo>& labels);
+void IppContourTracing(IppByteImage& imgSrc, int sx, int sy, std::vector<IppPoint>& cp);
