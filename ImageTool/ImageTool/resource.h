@@ -207,13 +207,22 @@
 #define ID_SEGMENT_LABELING             32881
 #define ID_32882                        32882
 #define ID_CONTOUR_TRACING              32883
+#define ID_32884                        32884
+#define ID_32885                        32885
+#define ID_MORPHOLOGY_EROSION           32886
+#define ID_32887                        32887
+#define ID_MORPHOLOGY_DILATION          32888
+#define ID_32889                        32889
+#define ID_MORPHOLOGY_OPENING           32890
+#define ID_32891                        32891
+#define ID_MORPHOLOGY_CLOSING           32892
 
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        345
-#define _APS_NEXT_COMMAND_VALUE         32884
+#define _APS_NEXT_COMMAND_VALUE         32893
 #define _APS_NEXT_CONTROL_VALUE         1046
 #define _APS_NEXT_SYMED_VALUE           311
 #endif

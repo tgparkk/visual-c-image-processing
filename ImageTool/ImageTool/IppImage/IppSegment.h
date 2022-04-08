@@ -24,3 +24,8 @@ int  IppBinarizationIterative(IppByteImage& imgSrc);
 
 int  IppLabeling(IppByteImage& imgSrc, IppIntImage& imgDst, std::vector<IppLabelInfo>& labels);
 void IppContourTracing(IppByteImage& imgSrc, int sx, int sy, std::vector<IppPoint>& cp);
+
+void IppMorphologyErosion(IppByteImage& imgSrc, IppByteImage& imgDst);
+void IppMorphologyDilation(IppByteImage& imgSrc, IppByteImage& imgDst);
+void IppMorphologyOpening(IppByteImage& imgSrc, IppByteImage& imgDst);
+void IppMorphologyClosing(IppByteImage& imgSrc, IppByteImage& imgDst);

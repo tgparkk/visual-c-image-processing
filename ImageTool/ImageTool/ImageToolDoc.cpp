@@ -135,6 +135,10 @@ BEGIN_MESSAGE_MAP(CImageToolDoc, CDocument)
 	ON_COMMAND(ID_SEGMENT_BINARIZATION, &CImageToolDoc::OnSegmentBinarization)
 	ON_COMMAND(ID_SEGMENT_LABELING, &CImageToolDoc::OnSegmentLabeling)
 	ON_COMMAND(ID_CONTOUR_TRACING, &CImageToolDoc::OnContourTracing)
+	ON_COMMAND(ID_MORPHOLOGY_EROSION, &CImageToolDoc::OnMorphologyErosion)
+	ON_COMMAND(ID_MORPHOLOGY_DILATION, &CImageToolDoc::OnMorphologyDilation)
+	ON_COMMAND(ID_MORPHOLOGY_OPENING, &CImageToolDoc::OnMorphologyOpening)
+	ON_COMMAND(ID_MORPHOLOGY_CLOSING, &CImageToolDoc::OnMorphologyClosing)
 END_MESSAGE_MAP()
 
 
@@ -1358,5 +1362,57 @@ void CImageToolDoc::OnContourTracing()
 	CONVERT_IMAGE_TO_DIB(imgContour, dib)
 
 	AfxPrintInfo(_T("[외곽선 추적] 입력 영상: %s, 객체 개수: %d"), GetTitle(), label_cnt);
+	AfxNewBitmap(dib);
+}
+
+
+void CImageToolDoc::OnMorphologyErosion()
+{
+	// TODO: 여기에 명령 처리기 코드를 추가합니다.
+	CONVERT_DIB_TO_BYTEIMAGE(m_Dib, img)
+	IppByteImage imgDst;
+	IppMorphologyErosion(img, imgDst);
+	CONVERT_IMAGE_TO_DIB(imgDst, dib)
+
+	AfxPrintInfo(_T("[이진 모폴로지/침식] 입력 영상: %s"), GetTitle());
+	AfxNewBitmap(dib);
+}
+
+
+void CImageToolDoc::OnMorphologyDilation()
+{
+	// TODO: 여기에 명령 처리기 코드를 추가합니다.
+	CONVERT_DIB_TO_BYTEIMAGE(m_Dib, img)
+	IppByteImage imgDst;
+	IppMorphologyDilation(img, imgDst);
+	CONVERT_IMAGE_TO_DIB(imgDst, dib)
+
+	AfxPrintInfo(_T("[이진 모폴로지/팽창] 입력 영상: %s"), GetTitle());
+	AfxNewBitmap(dib);
+}
+
+
+void CImageToolDoc::OnMorphologyOpening()
+{
+	// TODO: 여기에 명령 처리기 코드를 추가합니다.
+	CONVERT_DIB_TO_BYTEIMAGE(m_Dib, img)
+	IppByteImage imgDst;
+	IppMorphologyOpening(img, imgDst);
+	CONVERT_IMAGE_TO_DIB(imgDst, dib)
+
+	AfxPrintInfo(_T("[이진 모폴로지/열기] 입력 영상: %s"), GetTitle());
+	AfxNewBitmap(dib);
+}
+
+
+void CImageToolDoc::OnMorphologyClosing()
+{
+	// TODO: 여기에 명령 처리기 코드를 추가합니다.
+	CONVERT_DIB_TO_BYTEIMAGE(m_Dib, img)
+	IppByteImage imgDst;
+	IppMorphologyClosing(img, imgDst);
+	CONVERT_IMAGE_TO_DIB(imgDst, dib)
+
+	AfxPrintInfo(_T("[이진 모폴로지/닫기] 입력 영상: %s"), GetTitle());
 	AfxNewBitmap(dib);
 }

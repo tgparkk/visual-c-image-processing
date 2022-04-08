@@ -103,4 +103,8 @@ public:
 	afx_msg void OnSegmentBinarization();
 	afx_msg void OnSegmentLabeling();
 	afx_msg void OnContourTracing();
+	afx_msg void OnMorphologyErosion();
+	afx_msg void OnMorphologyDilation();
+	afx_msg void OnMorphologyOpening();
+	afx_msg void OnMorphologyClosing();
 };

@@ -289,3 +289,71 @@ void IppContourTracing(IppByteImage& imgSrc, int sx, int sy, std::vector<IppPoin
 			break;
 	}
 }
+
+void IppMorphologyErosion(IppByteImage& imgSrc, IppByteImage& imgDst)
+{
+	int i, j;
+	int w = imgSrc.GetWidth();
+	int h = imgSrc.GetHeight();
+
+	imgDst = imgSrc;
+
+	BYTE** pDst = imgDst.GetPixels2D();
+	BYTE** pSrc = imgSrc.GetPixels2D();
+
+	for (j = 1; j < h - 1; j++)
+		for (i = 1; i < w - 1; i++)
+		{
+			if (pSrc[j][i] != 0)
+			{
+				if (pSrc[j - 1][i] == 0 || pSrc[j - 1][i + 1] == 0 ||
+					pSrc[j][i - 1] == 0 || pSrc[j][i + 1] == 0 ||
+					pSrc[j + 1][i - 1] == 0 || pSrc[j + 1][i] == 0 ||
+					pSrc[j + 1][i + 1] == 0 || pSrc[j - 1][i - 1] == 0)
+				{
+					pDst[j][i] = 0;
+				}
+			}
+		}
+}
+
+void IppMorphologyDilation(IppByteImage& imgSrc, IppByteImage& imgDst)
+{
+	int i, j;
+	int w = imgSrc.GetWidth();
+	int h = imgSrc.GetHeight();
+
+	imgDst = imgSrc;
+
+	BYTE** pDst = imgDst.GetPixels2D();
+	BYTE** pSrc = imgSrc.GetPixels2D();
+
+	for (j = 1; j < h - 1; j++)
+		for (i = 1; i < w - 1; i++)
+		{
+			if (pSrc[j][i] == 0)
+			{
+				if (pSrc[j - 1][i] != 0 || pSrc[j - 1][i + 1] != 0 ||
+					pSrc[j][i - 1] != 0 || pSrc[j][i + 1] != 0 ||
+					pSrc[j + 1][i - 1] != 0 || pSrc[j + 1][i] != 0 ||
+					pSrc[j + 1][i + 1] != 0 || pSrc[j - 1][i - 1] != 0)
+				{
+					pDst[j][i] = 255;
+				}
+			}
+		}
+}
+
+void IppMorphologyOpening(IppByteImage& imgSrc, IppByteImage& imgDst)
+{
+	IppByteImage imgTmp;
+	IppMorphologyErosion(imgSrc, imgTmp);
+	IppMorphologyDilation(imgTmp, imgDst);
+}
+
+void IppMorphologyClosing(IppByteImage& imgSrc, IppByteImage& imgDst)
+{
+	IppByteImage imgTmp;
+	IppMorphologyDilation(imgSrc, imgTmp);
+	IppMorphologyErosion(imgTmp, imgDst);
+}
