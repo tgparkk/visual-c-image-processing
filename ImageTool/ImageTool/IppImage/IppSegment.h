@@ -29,3 +29,8 @@ void IppMorphologyErosion(IppByteImage& imgSrc, IppByteImage& imgDst);
 void IppMorphologyDilation(IppByteImage& imgSrc, IppByteImage& imgDst);
 void IppMorphologyOpening(IppByteImage& imgSrc, IppByteImage& imgDst);
 void IppMorphologyClosing(IppByteImage& imgSrc, IppByteImage& imgDst);
+
+void IppMorphologyGrayErosion(IppByteImage& imgSrc, IppByteImage& imgDst);
+void IppMorphologyGrayDilation(IppByteImage& imgSrc, IppByteImage& imgDst);
+void IppMorphologyGrayOpening(IppByteImage& imgSrc, IppByteImage& imgDst);
+void IppMorphologyGrayClosing(IppByteImage& imgSrc, IppByteImage& imgDst);

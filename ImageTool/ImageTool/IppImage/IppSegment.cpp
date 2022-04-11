@@ -357,3 +357,83 @@ void IppMorphologyClosing(IppByteImage& imgSrc, IppByteImage& imgDst)
 	IppMorphologyDilation(imgSrc, imgTmp);
 	IppMorphologyErosion(imgTmp, imgDst);
 }
+
+void IppMorphologyGrayErosion(IppByteImage& imgSrc, IppByteImage& imgDst)
+{
+	int i, j, m, n, x, y, pmin;
+	int w = imgSrc.GetWidth();
+	int h = imgSrc.GetHeight();
+
+	imgDst = imgSrc;
+
+	BYTE** pDst = imgDst.GetPixels2D();
+	BYTE** pSrc = imgSrc.GetPixels2D();
+
+	for (j = 0; j < h; j++)
+		for (i = 0; i < w; i++)
+		{
+			pmin = 255;
+
+			for (n = -1; n <= 1; n++)
+				for (m = -1; m <= 1; m++)
+				{
+					x = i + m;
+					y = j + n;
+
+					if (x >= 0 && x < w && y >= 0 && y < h)
+					{
+						if (pSrc[y][x] < pmin)
+							pmin = pSrc[y][x];
+					}
+				}
+
+			pDst[j][i] = pmin;
+		}
+}
+
+void IppMorphologyGrayDilation(IppByteImage& imgSrc, IppByteImage& imgDst)
+{
+	int i, j, m, n, x, y, pmax;
+	int w = imgSrc.GetWidth();
+	int h = imgSrc.GetHeight();
+
+	imgDst = imgSrc;
+
+	BYTE** pDst = imgDst.GetPixels2D();
+	BYTE** pSrc = imgSrc.GetPixels2D();
+
+	for (j = 0; j < h; j++)
+		for (i = 0; i < w; i++)
+		{
+			pmax = 0;
+
+			for (n = -1; n <= 1; n++)
+				for (m = -1; m <= 1; m++)
+				{
+					x = i + m;
+					y = j + n;
+
+					if (x >= 0 && x < w && y >= 0 && y < h)
+					{
+						if (pSrc[y][x] > pmax)
+							pmax = pSrc[y][x];
+					}
+				}
+
+			pDst[j][i] = pmax;
+		}
+}
+
+void IppMorphologyGrayOpening(IppByteImage& imgSrc, IppByteImage& imgDst)
+{
+	IppByteImage imgTmp;
+	IppMorphologyGrayErosion(imgSrc, imgTmp);
+	IppMorphologyGrayDilation(imgTmp, imgDst);
+}
+
+void IppMorphologyGrayClosing(IppByteImage& imgSrc, IppByteImage& imgDst)
+{
+	IppByteImage imgTmp;
+	IppMorphologyGrayDilation(imgSrc, imgTmp);
+	IppMorphologyGrayErosion(imgTmp, imgDst);
+}

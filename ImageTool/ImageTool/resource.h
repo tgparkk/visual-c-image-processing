@@ -216,13 +216,22 @@
 #define ID_MORPHOLOGY_OPENING           32890
 #define ID_32891                        32891
 #define ID_MORPHOLOGY_CLOSING           32892
+#define ID_32893                        32893
+#define ID_32894                        32894
+#define ID_32895                        32895
+#define ID_32896                        32896
+#define ID_32897                        32897
+#define ID_GRAYMORPH_EROSION            32898
+#define ID_GRAYMORPH_DILATION           32899
+#define ID_GRAYMORPH_OPENING            32900
+#define ID_GRAYMORPH_CLOSING            32901
 
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        345
-#define _APS_NEXT_COMMAND_VALUE         32893
+#define _APS_NEXT_COMMAND_VALUE         32902
 #define _APS_NEXT_CONTROL_VALUE         1046
 #define _APS_NEXT_SYMED_VALUE           311
 #endif

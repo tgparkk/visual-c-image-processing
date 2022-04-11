@@ -107,4 +107,8 @@ public:
 	afx_msg void OnMorphologyDilation();
 	afx_msg void OnMorphologyOpening();
 	afx_msg void OnMorphologyClosing();
+	afx_msg void OnGraymorphErosion();
+	afx_msg void OnGraymorphDilation();
+	afx_msg void OnGraymorphOpening();
+	afx_msg void OnGraymorphClosing();
 };
