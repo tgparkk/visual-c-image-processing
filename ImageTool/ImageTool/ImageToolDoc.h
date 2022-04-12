@@ -111,4 +111,5 @@ public:
 	afx_msg void OnGraymorphDilation();
 	afx_msg void OnGraymorphOpening();
 	afx_msg void OnGraymorphClosing();
+	afx_msg void OnFourierDescriptor();
 };

@@ -193,6 +193,7 @@
     <ClInclude Include="ColorCombineDlg.h" />
     <ClInclude Include="DiffusionDlg.h" />
     <ClInclude Include="FileNewDlg.h" />
+    <ClInclude Include="FourierDescDlg.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="FreqFilteringDlg.h" />
     <ClInclude Include="GammaCorrectionDlg.h" />
@@ -232,6 +233,7 @@
     <ClCompile Include="ColorCombineDlg.cpp" />
     <ClCompile Include="DiffusionDlg.cpp" />
     <ClCompile Include="FileNewDlg.cpp" />
+    <ClCompile Include="FourierDescDlg.cpp" />
     <ClCompile Include="FreqFilteringDlg.cpp" />
     <ClCompile Include="GammaCorrectionDlg.cpp" />
     <ClCompile Include="GaussianDlg.cpp" />

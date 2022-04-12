@@ -2,6 +2,7 @@
 
 #include "IppSegment.h"
 #include "IppEnhance.h"
+#include "IppFourier.h"
 
 void IppBinarization(IppByteImage& imgSrc, IppByteImage& imgDst, int threshold)
 {
@@ -436,4 +437,50 @@ void IppMorphologyGrayClosing(IppByteImage& imgSrc, IppByteImage& imgDst)
 	IppByteImage imgTmp;
 	IppMorphologyGrayDilation(imgSrc, imgTmp);
 	IppMorphologyGrayErosion(imgTmp, imgDst);
+}
+
+void IppFourierDescriptor(IppByteImage& img, int sx, int sy, int percent, std::vector<IppPoint>& cp)
+{
+	// 외곽선 좌표 구하기
+	IppContourTracing(img, sx, sy, cp);
+
+	// 푸리에 기술자 구하기
+	int num = cp.size();
+
+	double* x = new double[num];
+	double* y = new double[num];
+
+	for (int i = 0; i < num; i++)
+	{
+		x[i] = static_cast<double>(cp[i].x);
+		y[i] = static_cast<double>(cp[i].y);
+	}
+
+	DFT1d(x, y, num, 1);	// 이산 푸리에 변환
+
+	// 푸리에 기술자의 일부를 이용하여 외곽선 좌표 복원하기
+	int p = num * percent / 100;
+	for (int i = p; i < num; i++)
+	{
+		x[i] = 0.;
+		y[i] = 0.;
+	}
+
+	DFT1d(x, y, num, -1);	// 이산 푸리에 역변환
+
+	int w = img.GetWidth();
+	int h = img.GetHeight();
+
+	cp.clear();
+	IppPoint pt;
+	for (int i = 0; i < num; i++)
+	{
+		pt.x = limit(static_cast<int>(x[i] + 0.5), 0, w - 1);
+		pt.y = limit(static_cast<int>(y[i] + 0.5), 0, h - 1);
+		cp.push_back(pt);
+	}
+
+	// 동적 할당한 메모리 해제
+	delete[] x;
+	delete[] y;
 }

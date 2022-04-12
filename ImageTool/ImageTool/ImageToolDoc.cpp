@@ -54,6 +54,8 @@
 #include "BinarizationDlg.h"
 #include "IppImage/IppSegment.h"
 
+#include "FourierDescDlg.h"
+
 #include <algorithm>
 #include <functional>
 
@@ -143,6 +145,7 @@ BEGIN_MESSAGE_MAP(CImageToolDoc, CDocument)
 	ON_COMMAND(ID_GRAYMORPH_DILATION, &CImageToolDoc::OnGraymorphDilation)
 	ON_COMMAND(ID_GRAYMORPH_OPENING, &CImageToolDoc::OnGraymorphOpening)
 	ON_COMMAND(ID_GRAYMORPH_CLOSING, &CImageToolDoc::OnGraymorphClosing)
+	ON_COMMAND(ID_FOURIER_DESCRIPTOR, &CImageToolDoc::OnFourierDescriptor)
 END_MESSAGE_MAP()
 
 
@@ -1471,4 +1474,39 @@ void CImageToolDoc::OnGraymorphClosing()
 
 	AfxPrintInfo(_T("[그레이스케일 모폴로지/닫기] 입력 영상: %s"), GetTitle());
 	AfxNewBitmap(dib);
+}
+
+
+void CImageToolDoc::OnFourierDescriptor()
+{
+	// TODO: 여기에 명령 처리기 코드를 추가합니다.
+	CFourierDescDlg dlg;
+	if (dlg.DoModal() == IDOK)
+	{
+		CONVERT_DIB_TO_BYTEIMAGE(m_Dib, img)
+		IppIntImage imgLabel;
+		std::vector<IppLabelInfo> labels;
+		int label_cnt = IppLabeling(img, imgLabel, labels);
+
+		IppByteImage imgContour;
+		imgContour.CreateImage(img.GetWidth(), img.GetHeight());
+		BYTE** ptr = imgContour.GetPixels2D();
+
+		for (IppLabelInfo& info : labels)
+		{
+			std::vector<IppPoint> cp;
+			IppFourierDescriptor(img, info.pixels[0].x, info.pixels[0].y, dlg.m_nPercent, cp);
+
+			for (IppPoint pt : cp)
+			{
+				ptr[pt.y][pt.x] = 255;
+			}
+		}
+
+		CONVERT_IMAGE_TO_DIB(imgContour, dib)
+
+		AfxPrintInfo(_T("[푸리에 기술자] 입력 영상: %s, 객체 개수: %d, 복원 비율: %d%%"),
+				GetTitle(), label_cnt, dlg.m_nPercent);
+		AfxNewBitmap(dib);
+	}
 }

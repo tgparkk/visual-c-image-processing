@@ -34,3 +34,5 @@ void IppMorphologyGrayErosion(IppByteImage& imgSrc, IppByteImage& imgDst);
 void IppMorphologyGrayDilation(IppByteImage& imgSrc, IppByteImage& imgDst);
 void IppMorphologyGrayOpening(IppByteImage& imgSrc, IppByteImage& imgDst);
 void IppMorphologyGrayClosing(IppByteImage& imgSrc, IppByteImage& imgDst);
+
+void IppFourierDescriptor(IppByteImage& img, int sx, int sy, int percent, std::vector<IppPoint>& cp);
