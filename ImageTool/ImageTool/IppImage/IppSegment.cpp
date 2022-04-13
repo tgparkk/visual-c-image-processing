@@ -484,3 +484,81 @@ void IppFourierDescriptor(IppByteImage& img, int sx, int sy, int percent, std::v
 	delete[] x;
 	delete[] y;
 }
+
+void IppInvariantMoments(IppByteImage& img, double m[7])
+{
+	double g00, g10, g01, g20, g02, g11, g30, g03, g21, g12;
+	double c00, c20, c02, c11, c30, c03, c21, c12;
+	double n20, n02, n11, n30, n03, n21, n12;
+
+	// 기하학적 모멘트 구하기
+
+	g00 = IppGeometricMoment(img, 0, 0);
+	g10 = IppGeometricMoment(img, 1, 0);
+	g01 = IppGeometricMoment(img, 0, 1);
+	g20 = IppGeometricMoment(img, 2, 0);
+	g02 = IppGeometricMoment(img, 0, 2);
+	g11 = IppGeometricMoment(img, 1, 1);
+	g30 = IppGeometricMoment(img, 3, 0);
+	g03 = IppGeometricMoment(img, 0, 3);
+	g21 = IppGeometricMoment(img, 2, 1);
+	g12 = IppGeometricMoment(img, 1, 2);
+
+	// 중심 모멘트 구하기
+
+	double cx = g10 / g00;
+	double cy = g01 / g00;
+
+	c00 = g00;
+	c20 = g20 - cx * g10;
+	c02 = g02 - cy * g01;
+	c11 = g11 - cx * g01;
+	c30 = g30 - 3 * cx * g20 + 2 * cx * cx * g10;
+	c03 = g03 - 3 * cy * g02 + 2 * cy * cy * g01;
+	c21 = g21 - 2 * cx * g11 - cy * g20 + 2 * cx * cx * g01;
+	c12 = g12 - 2 * cy * g11 - cx * g02 + 2 * cy * cy * g10;
+
+	// 정규화된 중심 모멘트
+
+	n20 = c20 / pow(c00, 2.);
+	n02 = c02 / pow(c00, 2.);
+	n11 = c11 / pow(c00, 2.);
+	n30 = c30 / pow(c00, 2.5);
+	n03 = c03 / pow(c00, 2.5);
+	n21 = c21 / pow(c00, 2.5);
+	n12 = c12 / pow(c00, 2.5);
+
+	// 불변 모멘트 구하기
+
+	m[0] = n20 + n02;
+	m[1] = (n20 - n02) * (n20 - n02) + 4 * n11 * n11;
+	m[2] = (n30 - 3 * n12) * (n30 - 3 * n12) + (3 * n21 - n03) * (3 * n21 - n03);
+	m[3] = (n30 + n12) * (n30 + n12) + (n21 + n03) * (n21 + n03);
+	m[4] = (n30 - 3 * n12) * (n30 + n12) * ((n30 + n12) * (n30 + n12) - 3 * (n21 + n03) * (n21 + n03))
+		+ (3 * n21 - n03) * (n21 + n03) * (3 * (n30 + n12) * (n30 + n12) - (n21 + n03) * (n21 + n03));
+	m[5] = (n20 - n02) * ((n30 + n12) * (n30 + n12) - (n21 + n03) * (n21 + n03))
+		+ 4 * n11 * (n30 + n12) * (n21 + n03);
+	m[6] = (3 * n21 - n03) * (n30 + n12) * ((n30 + n12) * (n30 + n12) - 3 * (n21 + n03) * (n21 + n03))
+		+ (3 * n12 - n30) * (n21 + n03) * (3 * (n30 + n12) * (n30 + n12) - (n21 + n03) * (n21 + n03));
+}
+
+double IppGeometricMoment(IppByteImage& img, int p, int q)
+{
+	int w = img.GetWidth();
+	int h = img.GetHeight();
+	BYTE** ptr = img.GetPixels2D();
+
+	register int i, j, k;
+	double moment = 0, xp, yq;
+	for (j = 0; j < h; j++)
+		for (i = 0; i < w; i++)
+		{
+			xp = yq = 1;
+			for (k = 0; k < p; k++) xp *= i;
+			for (k = 0; k < q; k++) yq *= j;
+
+			moment += (xp * yq * ptr[j][i]);
+		}
+
+	return moment;
+}

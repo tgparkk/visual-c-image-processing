@@ -229,13 +229,15 @@
 #define ID_GRAYMORPH_CLOSING            32901
 #define ID_32902                        32902
 #define ID_FOURIER_DESCRIPTOR           32903
+#define ID_32904                        32904
+#define ID_INVARIANT_MOMENTS            32905
 
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        347
-#define _APS_NEXT_COMMAND_VALUE         32904
+#define _APS_NEXT_COMMAND_VALUE         32906
 #define _APS_NEXT_CONTROL_VALUE         1047
 #define _APS_NEXT_SYMED_VALUE           311
 #endif

@@ -146,6 +146,7 @@ BEGIN_MESSAGE_MAP(CImageToolDoc, CDocument)
 	ON_COMMAND(ID_GRAYMORPH_OPENING, &CImageToolDoc::OnGraymorphOpening)
 	ON_COMMAND(ID_GRAYMORPH_CLOSING, &CImageToolDoc::OnGraymorphClosing)
 	ON_COMMAND(ID_FOURIER_DESCRIPTOR, &CImageToolDoc::OnFourierDescriptor)
+	ON_COMMAND(ID_INVARIANT_MOMENTS, &CImageToolDoc::OnInvariantMoments)
 END_MESSAGE_MAP()
 
 
@@ -1509,4 +1510,26 @@ void CImageToolDoc::OnFourierDescriptor()
 				GetTitle(), label_cnt, dlg.m_nPercent);
 		AfxNewBitmap(dib);
 	}
+}
+
+
+void CImageToolDoc::OnInvariantMoments()
+{
+	// TODO: 여기에 명령 처리기 코드를 추가합니다.
+	CONVERT_DIB_TO_BYTEIMAGE(m_Dib, img)
+	double m[7] = { 0., };
+	IppInvariantMoments(img, m);
+
+	double mm[7] = { 0., };
+	CString strMoments = _T("");
+	for (int i = 0; i < 7; i++)
+	{
+		if (m[i] == 0) continue;
+		mm[i] = abs(log(abs(m[i])));
+		strMoments.AppendFormat(_T("m[%d] = %6.3lf"), i + 1, mm[i]);
+		if (i < 6) strMoments.Append(_T(", "));
+	}
+
+	AfxPrintInfo(_T("[불변 모멘트] 입력 영상: %s, 불변 모멘트(log): %s"),
+		GetTitle(), strMoments);
 }

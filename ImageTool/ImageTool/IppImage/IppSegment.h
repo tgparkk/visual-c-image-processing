@@ -36,3 +36,6 @@ void IppMorphologyGrayOpening(IppByteImage& imgSrc, IppByteImage& imgDst);
 void IppMorphologyGrayClosing(IppByteImage& imgSrc, IppByteImage& imgDst);
 
 void IppFourierDescriptor(IppByteImage& img, int sx, int sy, int percent, std::vector<IppPoint>& cp);
+
+void IppInvariantMoments(IppByteImage& img, double m[7]);
+double IppGeometricMoment(IppByteImage& img, int p, int q);
