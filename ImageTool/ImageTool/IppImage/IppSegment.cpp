@@ -3,6 +3,8 @@
 #include "IppSegment.h"
 #include "IppEnhance.h"
 #include "IppFourier.h"
+#include "IppGeometry.h"
+
 
 void IppBinarization(IppByteImage& imgSrc, IppByteImage& imgDst, int threshold)
 {
@@ -561,4 +563,79 @@ double IppGeometricMoment(IppByteImage& img, int p, int q)
 		}
 
 	return moment;
+}
+
+bool IppZernikeMoments(IppByteImage& img, int n, int m, double& zr, double& zi)
+{
+	if (n < 0 || ((n - abs(m)) % 2 != 0) || abs(m) > n)
+		return false;
+
+	if (n > 8)
+		return false;
+
+	const int ZM_RADIUS = 100;
+	const int ZM_SIZE = ZM_RADIUS * 2 + 1;
+	const int FACT[] = { 1, 1, 2, 6, 24, 120, 720, 5040, 40320 };
+
+	// 저니키 방사 다항식 계산
+
+	double zm_poly[ZM_RADIUS + 1] = { 0., };
+
+	int sign;
+	double rho;
+	for (int r = 0; r <= ZM_RADIUS; r++)
+	{
+		for (int s = 0; s <= ((n - m) / 2); s++)
+		{
+			sign = (s % 2 == 0) ? 1 : -1;
+			rho = static_cast<double>(r) / ZM_RADIUS;
+
+			zm_poly[r] += (sign * FACT[n - s] * pow(rho, (n - 2 * s)))
+				/ (FACT[s] * FACT[(n + m) / 2 - s] * FACT[(n - m) / 2 - s]);
+		}
+	}
+
+	// 저니키 기저 함수 계산
+
+	double zm_basis_real[ZM_SIZE][ZM_SIZE];
+	double zm_basis_imag[ZM_SIZE][ZM_SIZE];
+	int x, y, dist;
+	double theta;
+
+	for (y = 0; y < ZM_SIZE; y++)
+		for (x = 0; x < ZM_SIZE; x++)
+		{
+			dist = static_cast<int>(hypot(y - ZM_RADIUS, x - ZM_RADIUS));
+
+			if (dist <= ZM_RADIUS)
+			{
+				theta = atan2(y - ZM_RADIUS, x - ZM_RADIUS);
+				zm_basis_real[y][x] = zm_poly[dist] * cos(m * theta);
+				zm_basis_imag[y][x] = zm_poly[dist] * sin(m * theta);
+			}
+		}
+
+	zm_basis_real[ZM_RADIUS][ZM_RADIUS] = zm_poly[0];
+	zm_basis_imag[ZM_RADIUS][ZM_RADIUS] = 0.0;
+
+	// 저니키 모멘트 계산
+
+	IppByteImage imgDst;
+	IppResizeBilinear(img, imgDst, ZM_SIZE, ZM_SIZE);
+	BYTE** pDst = imgDst.GetPixels2D();
+
+	zr = zi = 0;
+	for (y = 0; y < ZM_SIZE; y++)
+		for (x = 0; x < ZM_SIZE; x++)
+		{
+			dist = static_cast<int>(hypot(y - ZM_RADIUS, x - ZM_RADIUS));
+
+			if (dist <= ZM_RADIUS)
+			{
+				zr += ((pDst[y][x] / 255.) * zm_basis_real[y][x]);
+				zi -= ((pDst[y][x] / 255.) * zm_basis_imag[y][x]); // Complex conjugate
+			}
+		}
+
+	return true;
 }

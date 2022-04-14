@@ -39,3 +39,5 @@ void IppFourierDescriptor(IppByteImage& img, int sx, int sy, int percent, std::v
 
 void IppInvariantMoments(IppByteImage& img, double m[7]);
 double IppGeometricMoment(IppByteImage& img, int p, int q);
+
+bool IppZernikeMoments(IppByteImage& img, int n, int m, double& zr, double& zi);

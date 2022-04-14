@@ -147,6 +147,7 @@ BEGIN_MESSAGE_MAP(CImageToolDoc, CDocument)
 	ON_COMMAND(ID_GRAYMORPH_CLOSING, &CImageToolDoc::OnGraymorphClosing)
 	ON_COMMAND(ID_FOURIER_DESCRIPTOR, &CImageToolDoc::OnFourierDescriptor)
 	ON_COMMAND(ID_INVARIANT_MOMENTS, &CImageToolDoc::OnInvariantMoments)
+	ON_COMMAND(ID_ZERNIKE_MOMENTS, &CImageToolDoc::OnZernikeMoments)
 END_MESSAGE_MAP()
 
 
@@ -1532,4 +1533,27 @@ void CImageToolDoc::OnInvariantMoments()
 
 	AfxPrintInfo(_T("[불변 모멘트] 입력 영상: %s, 불변 모멘트(log): %s"),
 		GetTitle(), strMoments);
+}
+
+
+void CImageToolDoc::OnZernikeMoments()
+{
+	// TODO: 여기에 명령 처리기 코드를 추가합니다.
+	CONVERT_DIB_TO_BYTEIMAGE(m_Dib, img)
+
+	AfxPrintInfo(_T("[저니키 모멘트] 입력 영상: %s, 저니키 모멘트(Mag) (n <= 6):"), GetTitle());
+
+	double zr, zi;
+	CString strMoments = _T("");
+	for (int n = 0; n <= 6; n++)
+	{
+		strMoments = _T("  ");
+		for (int m = (n % 2); m <= n; m += 2)
+		{
+			IppZernikeMoments(img, n, m, zr, zi);
+			strMoments.AppendFormat(_T("|zm(%d, %d)| = %7.3lf"), n, m, hypot(zr, zi));
+			if (m < n - 1) strMoments.Append(_T(", "));
+		}
+		AfxPrintInfo(strMoments);
+	}
 }

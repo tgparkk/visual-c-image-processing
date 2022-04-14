@@ -113,4 +113,5 @@ public:
 	afx_msg void OnGraymorphClosing();
 	afx_msg void OnFourierDescriptor();
 	afx_msg void OnInvariantMoments();
+	afx_msg void OnZernikeMoments();
 };
