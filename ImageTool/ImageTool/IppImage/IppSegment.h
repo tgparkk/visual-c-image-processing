@@ -41,3 +41,5 @@ void IppInvariantMoments(IppByteImage& img, double m[7]);
 double IppGeometricMoment(IppByteImage& img, int p, int q);
 
 bool IppZernikeMoments(IppByteImage& img, int n, int m, double& zr, double& zi);
+
+IppPoint IppTemplateMatching(IppByteImage& imgSrc, IppByteImage& imgTmpl, IppIntImage& imgMap);

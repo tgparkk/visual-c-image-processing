@@ -639,3 +639,47 @@ bool IppZernikeMoments(IppByteImage& img, int n, int m, double& zr, double& zi)
 
 	return true;
 }
+
+IppPoint IppTemplateMatching(IppByteImage& imgSrc, IppByteImage& imgTmpl, IppIntImage& imgMap)
+{
+	int sw = imgSrc.GetWidth();   // 입력 영상의 가로 크기
+	int sh = imgSrc.GetHeight();  // 입력 영상의 세로 크기
+	int tw = imgTmpl.GetWidth();  // 템플릿 영상의 가로 크기
+	int th = imgTmpl.GetHeight(); // 템플릿 영상의 세로 크기
+	int tw2 = tw / 2;
+	int th2 = th / 2;
+
+	imgMap.CreateImage(sw, sh);
+
+	BYTE** pSrc = imgSrc.GetPixels2D();
+	BYTE** pTmpl = imgTmpl.GetPixels2D();
+	int** pMap = imgMap.GetPixels2D();
+
+	IppPoint dp;
+
+	int i, j, x, y;
+	int min_value = 99999;
+	int diff, sum_of_diff;
+	for (j = th2; j <= sh - th2; j++)
+		for (i = tw2; i <= sw - tw2; i++)
+		{
+			sum_of_diff = 0;
+			for (y = 0; y < th; y++)
+				for (x = 0; x < tw; x++)
+				{
+					diff = pSrc[j - th2 + y][i - tw2 + x] - pTmpl[y][x];
+					sum_of_diff += (diff * diff);
+				}
+
+			pMap[j][i] = sum_of_diff / (tw * th);
+
+			if (pMap[j][i] < min_value)
+			{
+				min_value = pMap[j][i];
+				dp.x = i;
+				dp.y = j;
+			}
+		}
+
+	return dp;
+}

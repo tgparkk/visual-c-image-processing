@@ -148,6 +148,7 @@ BEGIN_MESSAGE_MAP(CImageToolDoc, CDocument)
 	ON_COMMAND(ID_FOURIER_DESCRIPTOR, &CImageToolDoc::OnFourierDescriptor)
 	ON_COMMAND(ID_INVARIANT_MOMENTS, &CImageToolDoc::OnInvariantMoments)
 	ON_COMMAND(ID_ZERNIKE_MOMENTS, &CImageToolDoc::OnZernikeMoments)
+	ON_COMMAND(ID_TEMPLATE_MATCHING, &CImageToolDoc::OnTemplateMatching)
 END_MESSAGE_MAP()
 
 
@@ -1556,4 +1557,83 @@ void CImageToolDoc::OnZernikeMoments()
 		}
 		AfxPrintInfo(strMoments);
 	}
+}
+
+
+void CImageToolDoc::OnTemplateMatching()
+{
+	// TODO: 여기에 명령 처리기 코드를 추가합니다.
+	TCHAR szFilter[] = _T("Bitmap Files (*.BMP)|*.BMP|All Files (*.*)|*.*||");
+	CFileDialog dlg(TRUE, NULL, NULL, OFN_HIDEREADONLY | OFN_OVERWRITEPROMPT, szFilter);
+	if (dlg.DoModal() != IDOK)
+		return;
+
+	CString pathName = dlg.GetPathName();
+	IppDib dibTmpl;
+	if (!dibTmpl.Load(CT2A(pathName)))
+	{
+		AfxMessageBox(_T("파일을 불러오지 못했습니다."));
+		return;
+	}
+	AfxNewBitmap(dibTmpl);
+
+	if (m_Dib.GetWidth() < dibTmpl.GetWidth() || m_Dib.GetHeight() < dibTmpl.GetHeight())
+	{
+		AfxMessageBox(_T("템플릿 영상의 크기가 입력 영상보다 큽니다."));
+		return;
+	}
+
+	CONVERT_DIB_TO_BYTEIMAGE(m_Dib, img)
+		CONVERT_DIB_TO_BYTEIMAGE(dibTmpl, imgTmpl)
+		IppIntImage imgMap;
+	IppPoint dp = IppTemplateMatching(img, imgTmpl, imgMap);
+
+#if 0
+	{
+		IppByteImage imgCvt(img.GetWidth(), img.GetHeight());
+		BYTE* pCvt = imgCvt.GetPixels();
+		int* pMap = imgMap.GetPixels();
+
+		int max_value = 0;
+		for (int i = 0; i < img.GetSize(); i++)
+		{
+			if (pMap[i] > max_value) max_value = pMap[i];
+		}
+
+		if (max_value != 0)
+		{
+			for (int i = 0; i < img.GetSize(); i++)
+			{
+				pCvt[i] = pMap[i] * 255 / max_value;
+			}
+		}
+
+		CONVERT_IMAGE_TO_DIB(imgCvt, dibMap)
+			AfxNewBitmap(dibMap);
+	}
+#endif
+
+	{ // 입력 영상에 BOX 그리기
+		int tw2 = imgTmpl.GetWidth() / 2;
+		int th2 = imgTmpl.GetHeight() / 2;
+
+		int minx = dp.x - tw2;
+		int maxx = dp.x + tw2;
+		int miny = dp.y - th2;
+		int maxy = dp.y + th2;
+
+		BYTE** ptr = img.GetPixels2D();
+
+		for (int j = miny; j < maxy; j++)
+			ptr[j][minx] = ptr[j][maxx] = 255;
+
+		for (int i = minx; i < maxx; i++)
+			ptr[miny][i] = ptr[maxy][i] = 255;
+	}
+
+	CONVERT_IMAGE_TO_DIB(img, dib)
+
+		AfxPrintInfo(_T("[템플릿 매칭] 입력 영상: %s, 템플릿 영상: %s, 검출 좌표: (%d, %d)"),
+			GetTitle(), dlg.GetFileName(), dp.x, dp.y);
+	AfxNewBitmap(dib);
 }

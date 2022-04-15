@@ -233,13 +233,15 @@
 #define ID_INVARIANT_MOMENTS            32905
 #define ID_32906                        32906
 #define ID_ZERNIKE_MOMENTS              32907
+#define ID_32908                        32908
+#define ID_TEMPLATE_MATCHING            32909
 
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        347
-#define _APS_NEXT_COMMAND_VALUE         32908
+#define _APS_NEXT_COMMAND_VALUE         32910
 #define _APS_NEXT_CONTROL_VALUE         1047
 #define _APS_NEXT_SYMED_VALUE           311
 #endif
