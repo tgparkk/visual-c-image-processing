@@ -132,6 +132,9 @@
     <ClInclude Include="FourierDescDlg.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="IppImage\IppAvi.h">
+      <Filter>IppImage</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ImageTool.cpp">
@@ -232,6 +235,9 @@
     </ClCompile>
     <ClCompile Include="FourierDescDlg.cpp">
       <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="IppImage\IppAvi.cpp">
+      <Filter>IppImage</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
