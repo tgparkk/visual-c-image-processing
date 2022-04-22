@@ -187,6 +187,9 @@
   <ItemGroup>
     <ClInclude Include="AddNoiseDlg.h" />
     <ClInclude Include="ArithmeticLogicaDlg.h" />
+    <ClInclude Include="AviChildFrame.h" />
+    <ClInclude Include="AviDoc.h" />
+    <ClInclude Include="AviView.h" />
     <ClInclude Include="BinarizationDlg.h" />
     <ClInclude Include="BrightnessContrastDlg.h" />
     <ClInclude Include="CannyEdgeDlg.h" />
@@ -228,6 +231,9 @@
   <ItemGroup>
     <ClCompile Include="AddNoiseDlg.cpp" />
     <ClCompile Include="ArithmeticLogicaDlg.cpp" />
+    <ClCompile Include="AviChildFrame.cpp" />
+    <ClCompile Include="AviDoc.cpp" />
+    <ClCompile Include="AviView.cpp" />
     <ClCompile Include="BinarizationDlg.cpp" />
     <ClCompile Include="BrightnessContrastDlg.cpp" />
     <ClCompile Include="CannyEdgeDlg.cpp" />
@@ -277,6 +283,7 @@
     <ResourceCompile Include="ImageTool.rc" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="res\avi_type.ico" />
     <Image Include="res\ImageTool.ico" />
     <Image Include="res\ImageToolDoc.ico" />
     <Image Include="res\output_wnd.ico" />

@@ -16,11 +16,13 @@
 #define IDR_MAINFRAME_256               129
 #define IDR_ImageToolTYPE               130
 #define ID_WINDOW_MANAGER               131
+#define IDR_ImageToolTYPE2              132
 #define ID_VIEW_OUTPUTWND               149
 #define IDS_OUTPUT_WND                  157
 #define IDI_OUTPUT_WND                  165
 #define IDI_OUTPUT_WND_HC               166
 #define IDR_OUTPUT_POPUP                182
+#define IDR_AVI_TYPE                    183
 #define IDS_BUILD_TAB                   300
 #define IDS_DEBUG_TAB                   301
 #define IDS_FIND_TAB                    302

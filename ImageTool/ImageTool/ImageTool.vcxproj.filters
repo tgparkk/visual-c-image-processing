@@ -135,6 +135,15 @@
     <ClInclude Include="IppImage\IppAvi.h">
       <Filter>IppImage</Filter>
     </ClInclude>
+    <ClInclude Include="AviChildFrame.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="AviDoc.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="AviView.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ImageTool.cpp">
@@ -239,6 +248,15 @@
     <ClCompile Include="IppImage\IppAvi.cpp">
       <Filter>IppImage</Filter>
     </ClCompile>
+    <ClCompile Include="AviChildFrame.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="AviDoc.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="AviView.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="ImageTool.reg" />
@@ -272,6 +290,9 @@
       <Filter>리소스 파일</Filter>
     </Image>
     <Image Include="res\Toolbar256.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="res\avi_type.ico">
       <Filter>리소스 파일</Filter>
     </Image>
   </ItemGroup>

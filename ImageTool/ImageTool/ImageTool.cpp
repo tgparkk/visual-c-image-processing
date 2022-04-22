@@ -15,6 +15,10 @@
 
 #include "./IppImage/IppDib.h"
 
+#include "AviChildFrame.h"
+#include "AviDoc.h"
+#include "AviView.h"
+
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif
@@ -37,7 +41,7 @@ END_MESSAGE_MAP()
 // CImageToolApp 생성
 
 CImageToolApp::CImageToolApp() noexcept
-	: m_pNewDib(NULL), m_pImageDocTemplate(NULL)
+	: m_pNewDib(NULL), m_pImageDocTemplate(NULL),m_pAviDocTemplate(NULL)
 {
 	m_bHiColorIcons = TRUE;
 
@@ -127,6 +131,17 @@ BOOL CImageToolApp::InitInstance()
 	if (!m_pImageDocTemplate)
 		return FALSE;
 	AddDocTemplate(m_pImageDocTemplate);
+
+	m_pAviDocTemplate = new CMultiDocTemplate(IDR_AVI_TYPE,
+		RUNTIME_CLASS(CAviDoc),
+		RUNTIME_CLASS(CAviChildFrame),
+		RUNTIME_CLASS(CAviView));
+
+	if (!m_pAviDocTemplate)
+		return FALSE;
+	AddDocTemplate(m_pAviDocTemplate);
+
+
 
 	// 주 MDI 프레임 창을 만듭니다.
 	CMainFrame* pMainFrame = new CMainFrame;

@@ -23,6 +23,7 @@ public:
 public:
 	IppDib* m_pNewDib;
 	CMultiDocTemplate* m_pImageDocTemplate;
+	CMultiDocTemplate* m_pAviDocTemplate;
 
 
 // 재정의입니다.
