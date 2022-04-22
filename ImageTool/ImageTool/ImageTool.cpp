@@ -17,7 +17,7 @@
 
 #include "AviChildFrame.h"
 #include "AviDoc.h"
-#include "AviView.h"
+#include "CAviView.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -132,6 +132,7 @@ BOOL CImageToolApp::InitInstance()
 		return FALSE;
 	AddDocTemplate(m_pImageDocTemplate);
 
+	///*
 	m_pAviDocTemplate = new CMultiDocTemplate(IDR_AVI_TYPE,
 		RUNTIME_CLASS(CAviDoc),
 		RUNTIME_CLASS(CAviChildFrame),
@@ -140,7 +141,7 @@ BOOL CImageToolApp::InitInstance()
 	if (!m_pAviDocTemplate)
 		return FALSE;
 	AddDocTemplate(m_pAviDocTemplate);
-
+	//*/
 
 
 	// 주 MDI 프레임 창을 만듭니다.

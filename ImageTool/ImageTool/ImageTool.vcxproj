@@ -189,10 +189,10 @@
     <ClInclude Include="ArithmeticLogicaDlg.h" />
     <ClInclude Include="AviChildFrame.h" />
     <ClInclude Include="AviDoc.h" />
-    <ClInclude Include="AviView.h" />
     <ClInclude Include="BinarizationDlg.h" />
     <ClInclude Include="BrightnessContrastDlg.h" />
     <ClInclude Include="CannyEdgeDlg.h" />
+    <ClInclude Include="CAviView.h" />
     <ClInclude Include="ChildFrm.h" />
     <ClInclude Include="ColorCombineDlg.h" />
     <ClInclude Include="DiffusionDlg.h" />
@@ -233,10 +233,10 @@
     <ClCompile Include="ArithmeticLogicaDlg.cpp" />
     <ClCompile Include="AviChildFrame.cpp" />
     <ClCompile Include="AviDoc.cpp" />
-    <ClCompile Include="AviView.cpp" />
     <ClCompile Include="BinarizationDlg.cpp" />
     <ClCompile Include="BrightnessContrastDlg.cpp" />
     <ClCompile Include="CannyEdgeDlg.cpp" />
+    <ClCompile Include="CAviView.cpp" />
     <ClCompile Include="ChildFrm.cpp" />
     <ClCompile Include="ColorCombineDlg.cpp" />
     <ClCompile Include="DiffusionDlg.cpp" />
