@@ -17,7 +17,7 @@
 
 #include "AviChildFrame.h"
 #include "AviDoc.h"
-#include "CAviView.h"
+#include "AviView.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -35,6 +35,7 @@ BEGIN_MESSAGE_MAP(CImageToolApp, CWinAppEx)
 	ON_COMMAND(ID_FILE_PRINT_SETUP, &CWinAppEx::OnFilePrintSetup)
 	ON_COMMAND(ID_EDIT_PASTE, &CImageToolApp::OnEditPaste)
 	ON_COMMAND(ID_WINDOW_CLOSEALL, &CImageToolApp::OnWindowCloseall)
+	ON_COMMAND(ID_FILE_NEW, &CImageToolApp::OnFileNew)
 END_MESSAGE_MAP()
 
 
@@ -300,4 +301,11 @@ void CImageToolApp::OnWindowCloseall()
 {
 	// TODO: 여기에 명령 처리기 코드를 추가합니다.
 	CloseAllDocuments(TRUE);
+}
+
+
+void CImageToolApp::OnFileNew()
+{
+	// TODO: 여기에 명령 처리기 코드를 추가합니다.
+	m_pImageDocTemplate->OpenDocumentFile(NULL);
 }

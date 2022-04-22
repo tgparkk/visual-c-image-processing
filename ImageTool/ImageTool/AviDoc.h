@@ -23,4 +23,7 @@ protected:
 	virtual BOOL OnNewDocument();
 
 	DECLARE_MESSAGE_MAP()
+public:
+	virtual BOOL OnSaveDocument(LPCTSTR lpszPathName);
+	virtual BOOL OnOpenDocument(LPCTSTR lpszPathName);
 };

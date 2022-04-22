@@ -43,6 +43,7 @@ public:
 	afx_msg void OnEditPaste();
 
 	afx_msg void OnWindowCloseall();
+	afx_msg void OnFileNew();
 };
 
 extern CImageToolApp theApp;

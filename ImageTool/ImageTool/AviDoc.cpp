@@ -4,7 +4,7 @@
 #include "pch.h"
 #include "ImageTool.h"
 #include "AviDoc.h"
-
+#include "AviView.h"
 
 // CAviDoc
 
@@ -16,9 +16,9 @@ CAviDoc::CAviDoc()
 
 BOOL CAviDoc::OnNewDocument()
 {
-	if (!CDocument::OnNewDocument())
+	//if (!CDocument::OnNewDocument())
 		return FALSE;
-	return TRUE;
+	//return TRUE;
 }
 
 CAviDoc::~CAviDoc()
@@ -64,3 +64,29 @@ void CAviDoc::Serialize(CArchive& ar)
 
 
 // CAviDoc 명령
+
+
+BOOL CAviDoc::OnSaveDocument(LPCTSTR lpszPathName)
+{
+	// TODO: 여기에 특수화된 코드를 추가 및/또는 기본 클래스를 호출합니다.
+
+	//return CDocument::OnSaveDocument(lpszPathName);
+	return FALSE;
+}
+
+
+BOOL CAviDoc::OnOpenDocument(LPCTSTR lpszPathName)
+{
+	if (!CDocument::OnOpenDocument(lpszPathName))
+		return FALSE;
+
+	// TODO:  여기에 특수화된 작성 코드를 추가합니다.
+	POSITION pos = GetFirstViewPosition();
+	if (pos != NULL)
+	{
+		CAviView* pView = (CAviView*)GetNextView(pos);
+		pView->AviFileOpen(lpszPathName);
+	}
+
+	return TRUE;
+}
