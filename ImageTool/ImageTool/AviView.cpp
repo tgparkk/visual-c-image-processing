@@ -227,3 +227,12 @@ void CAviView::OnVideoCapture()
 		m_nCurrentFrame, dib.GetWidth(), dib.GetHeight(), 0x01 << dib.GetBitCount());
 	AfxNewBitmap(dib);
 }
+
+BOOL CAviView::OnEraseBkgnd(CDC* pDC)
+{
+	CBrush br;
+	br.CreateHatchBrush(HS_DIAGCROSS, RGB(200, 200, 200));
+	FillOutsideRect(pDC, &br);
+
+	return TRUE;       // Erased
+}

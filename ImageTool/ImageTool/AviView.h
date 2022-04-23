@@ -47,6 +47,7 @@ public:
 	afx_msg void OnVideoNext();
 	afx_msg void OnVideoEnd();
 	afx_msg void OnVideoCapture();
+	afx_msg BOOL OnEraseBkgnd(CDC* pDC);
 };
 
 

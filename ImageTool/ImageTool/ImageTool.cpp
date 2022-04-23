@@ -29,7 +29,7 @@
 BEGIN_MESSAGE_MAP(CImageToolApp, CWinAppEx)
 	ON_COMMAND(ID_APP_ABOUT, &CImageToolApp::OnAppAbout)
 	// 표준 파일을 기초로 하는 문서 명령입니다.
-	ON_COMMAND(ID_FILE_NEW, &CWinAppEx::OnFileNew)
+//	ON_COMMAND(ID_FILE_NEW, &CWinAppEx::OnFileNew)
 	ON_COMMAND(ID_FILE_OPEN, &CWinAppEx::OnFileOpen)
 	// 표준 인쇄 설정 명령입니다.
 	ON_COMMAND(ID_FILE_PRINT_SETUP, &CWinAppEx::OnFilePrintSetup)

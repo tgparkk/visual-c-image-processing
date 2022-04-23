@@ -22,6 +22,7 @@ CAviChildFrame::~CAviChildFrame()
 
 
 BEGIN_MESSAGE_MAP(CAviChildFrame, CMDIChildWndEx)
+	ON_WM_CREATE()
 END_MESSAGE_MAP()
 
 

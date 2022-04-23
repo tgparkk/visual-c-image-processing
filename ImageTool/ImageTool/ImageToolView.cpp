@@ -79,7 +79,7 @@ void CImageToolView::OnDraw(CDC* pDC)
 	if (pDoc->m_Dib.IsValid())
 	{
 		int w = pDoc->m_Dib.GetWidth();
-		int h = pDoc->m_Dib.GetWidth();
+		int h = pDoc->m_Dib.GetHeight();
 		pDoc->m_Dib.Draw(pDC->m_hDC, 0, 0, w * m_nZoom, h * m_nZoom);
 	}
 }
