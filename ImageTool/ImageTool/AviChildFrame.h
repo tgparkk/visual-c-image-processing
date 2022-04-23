@@ -14,6 +14,10 @@ public:
 
 protected:
 	DECLARE_MESSAGE_MAP()
+
+public:
+	CMFCToolBar    m_wndToolBar;
+	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
 };
 
 
