@@ -125,6 +125,7 @@ void IppDib::DestroyBitmap()
 	m_nDibSize = 0;
 }
 
+/*
 BOOL IppDib::Load(const char* filename)
 {
 	const char* ext = strrchr(filename, '.');
@@ -139,6 +140,30 @@ BOOL IppDib::Save(const char* filename)
 	const char* ext = strrchr(filename, '.');
 	if (!_strcmpi(ext, ".bmp"))
 		return SaveBMP(filename);
+	else
+		return FALSE;
+}
+*/
+
+BOOL IppDib::Load(const char* filename)
+{
+	const char* ext = strrchr(filename, '.');
+	if (!_strcmpi(ext, ".bmp"))
+		return LoadBMP(filename);
+	else if (!_strcmpi(ext, ".jpg"))
+		return LoadJPG(filename);
+	else
+		return FALSE;
+}
+
+BOOL IppDib::Save(const char* filename)
+{
+	const char* ext = strrchr(filename, ' . ');
+	if (!_strcmpi(ext, ".bmp"))
+		return SaveBMP(filename);
+	else if (!_strcmpi(ext, ".jpg"))
+		//return SaveJPG(filename);
+		return FALSE;
 	else
 		return FALSE;
 }
@@ -235,28 +260,6 @@ BOOL IppDib::SaveBMP(const char* filename)
 	fclose(fp);
 
 	return TRUE;
-}
-
-BOOL IppDib::LoadJPG(const char* filename)
-{
-	const char* ext = strrchr(filename, ' . ');
-	if (!_strcmpi(ext, ".bmp"))
-		return LoadBMP(filename);
-	else if (!_strcmpi(ext, ".jpg"))
-		return LoadJPG(filename);
-	else
-		return FALSE;
-}
-
-BOOL IppDib::SaveJPG(const char* filename)
-{
-	const char* ext = strrchr(filename, ' . ');
-	if (!_strcmpi(ext, ".bmp"))
-		return SaveBMP(filename);
-	else if (!_strcmpi(ext, ".jpg"))
-		return SaveJPG(filename);
-	else
-		return FALSE;
 }
 
 void IppDib::Draw(HDC hdc, int dx, int dy)

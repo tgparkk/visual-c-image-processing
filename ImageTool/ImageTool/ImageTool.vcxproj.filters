@@ -263,6 +263,9 @@
     <ClCompile Include="IppImage\IppFullSearch.cpp">
       <Filter>IppImage</Filter>
     </ClCompile>
+    <ClCompile Include="IppImage\IppDibJpg.cpp">
+      <Filter>IppImage</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="ImageTool.reg" />
