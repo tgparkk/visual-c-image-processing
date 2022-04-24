@@ -215,6 +215,7 @@
     <ClInclude Include="IppImage\IppFeature.h" />
     <ClInclude Include="IppImage\IppFilter.h" />
     <ClInclude Include="IppImage\IppFourier.h" />
+    <ClInclude Include="IppImage\IppFullSearch.h" />
     <ClInclude Include="IppImage\IppGeometry.h" />
     <ClInclude Include="IppImage\IppImage.h" />
     <ClInclude Include="IppImage\IppSegment.h" />
@@ -258,6 +259,7 @@
     <ClCompile Include="IppImage\IppFeature.cpp" />
     <ClCompile Include="IppImage\IppFilter.cpp" />
     <ClCompile Include="IppImage\IppFourier.cpp" />
+    <ClCompile Include="IppImage\IppFullSearch.cpp" />
     <ClCompile Include="IppImage\IppGeometry.cpp" />
     <ClCompile Include="IppImage\IppSegment.cpp" />
     <ClCompile Include="MainFrm.cpp" />

@@ -32,6 +32,7 @@ public:
 	
 	// 현재 재생 위치
 	BOOL m_bPlay;
+	int m_nMode; // 재생 모드
 
 	BOOL AviFileOpen(LPCTSTR lpszPathName);
 
@@ -48,6 +49,12 @@ public:
 	afx_msg void OnVideoEnd();
 	afx_msg void OnVideoCapture();
 	afx_msg BOOL OnEraseBkgnd(CDC* pDC);
+	afx_msg void OnModeNormal();
+	afx_msg void OnUpdateModeNormal(CCmdUI* pCmdUI);
+	afx_msg void OnModeDifference();
+	afx_msg void OnUpdateModeDifference(CCmdUI* pCmdUI);
+	afx_msg void OnModeMotion();
+	afx_msg void OnUpdateModeMotion(CCmdUI* pCmdUI);
 };
 
 

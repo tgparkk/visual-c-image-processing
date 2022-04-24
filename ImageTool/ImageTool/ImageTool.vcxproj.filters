@@ -144,6 +144,9 @@
     <ClInclude Include="AviView.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="IppImage\IppFullSearch.h">
+      <Filter>IppImage</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ImageTool.cpp">
@@ -256,6 +259,9 @@
     </ClCompile>
     <ClCompile Include="AviView.cpp">
       <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="IppImage\IppFullSearch.cpp">
+      <Filter>IppImage</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

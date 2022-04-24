@@ -252,13 +252,19 @@
 #define ID_32924                        32924
 #define ID_32925                        32925
 #define ID_32926                        32926
+#define ID_32927                        32927
+#define ID_32928                        32928
+#define ID_32929                        32929
+#define ID_MODE_NORMAL                  32930
+#define ID_MODE_DIFFERENCE              32931
+#define ID_MODE_MOTION                  32932
 
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        349
-#define _APS_NEXT_COMMAND_VALUE         32927
+#define _APS_NEXT_COMMAND_VALUE         32933
 #define _APS_NEXT_CONTROL_VALUE         1047
 #define _APS_NEXT_SYMED_VALUE           311
 #endif
