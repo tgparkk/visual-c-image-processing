@@ -237,6 +237,28 @@ BOOL IppDib::SaveBMP(const char* filename)
 	return TRUE;
 }
 
+BOOL IppDib::LoadJPG(const char* filename)
+{
+	const char* ext = strrchr(filename, ' . ');
+	if (!_strcmpi(ext, ".bmp"))
+		return LoadBMP(filename);
+	else if (!_strcmpi(ext, ".jpg"))
+		return LoadJPG(filename);
+	else
+		return FALSE;
+}
+
+BOOL IppDib::SaveJPG(const char* filename)
+{
+	const char* ext = strrchr(filename, ' . ');
+	if (!_strcmpi(ext, ".bmp"))
+		return SaveBMP(filename);
+	else if (!_strcmpi(ext, ".jpg"))
+		return SaveJPG(filename);
+	else
+		return FALSE;
+}
+
 void IppDib::Draw(HDC hdc, int dx, int dy)
 {
 	if (m_pDib == NULL)

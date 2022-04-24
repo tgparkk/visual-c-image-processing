@@ -47,6 +47,10 @@ private:
 	BOOL        LoadBMP(const char* filename);
 	BOOL        SaveBMP(const char* filename);
 
+	// JPG 파일 입출력
+	BOOL        LoadJPG(const char* filename);
+	BOOL        SaveJPG(const char* filename);
+
 private:
 	LONG    m_nWidth;      // 비트맵 가로 크기 (픽셀 단위)
 	LONG    m_nHeight;     // 비트맵 세로 크기 (픽셀 단위)
